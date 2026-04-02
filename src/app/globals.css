@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-vscode-bg text-vscode-text font-sans;
+  }
+
+  /* Custom scrollbar - VS Code style */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-vscode-sidebar;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-vscode-hover rounded;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-vscode-border;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-vscode-primary text-white px-5 py-2.5 rounded
+           font-medium transition-all duration-200
+           hover:brightness-110 active:scale-[0.98]
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-vscode-hover text-vscode-text px-5 py-2.5 rounded
+           font-medium border border-vscode-border transition-all duration-200
+           hover:bg-vscode-border active:scale-[0.98];
+  }
+
+  .input-field {
+    @apply w-full bg-vscode-input text-vscode-text border border-vscode-border
+           rounded px-4 py-2.5 outline-none transition-colors duration-200
+           focus:border-vscode-primary placeholder:text-vscode-text-muted;
+  }
+
+  .card {
+    @apply bg-vscode-bg-light border border-vscode-border rounded-lg p-6;
+  }
+}
