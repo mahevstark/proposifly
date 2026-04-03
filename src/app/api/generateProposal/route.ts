@@ -100,7 +100,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Strip any markdown formatting (asterisks, hashes, etc.)
-    proposal = proposal.replace(/\*\*/g, "").replace(/\*/g, "").replace(/^#{1,6}\s/gm, "");
+    proposal = proposal.replace(/\*\*/g, "").replace(/\*/g, "").replace(/^#{1,6}\s/gm, "").replace(/^[-•]\s+/gm, "");
 
     return NextResponse.json({ proposal });
   } catch (err: unknown) {

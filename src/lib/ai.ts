@@ -21,8 +21,8 @@ export function buildPrompt(
   return `You are a professional proposal writer. ${toneInstructions[tone]}
 
 IMPORTANT RULES:
-- STRICTLY FORBIDDEN: Do NOT use asterisks (*) anywhere in the output. No bold, no markdown, no ** at all.
-- Use plain text ONLY. No formatting characters whatsoever. Use line breaks for separation.
+- STRICTLY FORBIDDEN: Do NOT use asterisks (*), dashes (-), bullet points, or any markdown formatting anywhere in the output. No bold, no ** at all.
+- Use plain text ONLY. No formatting characters whatsoever. No dashes at the start of lines. Use line breaks for separation.
 - Keep the proposal short and to the point — maximum 150 words.
 - Always mention 10+ years of experience.
 - Do NOT repeat the full job description back. Just show you understand it briefly.
