@@ -1,25 +1,31 @@
 const steps = [
-  { num: "01", title: "Sign Up Free", desc: "Create your free account in seconds — no credit card needed." },
-  { num: "02", title: "Add Your Portfolio", desc: "Save your portfolio links once. They will be auto-attached to every proposal you generate." },
-  { num: "03", title: "Paste Job Description", desc: "Copy the job post into Proposifly and choose your tone." },
-  { num: "04", title: "Generate & Send", desc: "AI writes a polished proposal with your portfolio included — ready to send." },
+  { num: "01", title: "Sign Up Free", desc: "Create your free account in seconds — no credit card needed.", icon: "👤" },
+  { num: "02", title: "Add Portfolio & Profiles", desc: "Save your portfolio links and profiles (GitHub, LinkedIn, etc.). Toggle which ones to include.", icon: "🔗" },
+  { num: "03", title: "Paste & Generate", desc: "Paste any job description, pick your tone, and AI generates a polished proposal with your name and links attached.", icon: "🤖" },
+  { num: "04", title: "History & Search", desc: "Every proposal is auto-saved. Search, filter by tone, and access any proposal from your history.", icon: "📜" },
+  { num: "05", title: "Generate PRD", desc: "Turn any proposal into a Project Requirements Document with phases, budget, timeline, and tools.", icon: "📄" },
 ];
 
-/** Three-step workflow section for landing page */
+/** Five-step workflow section for landing page */
 export default function WorkflowSteps() {
   return (
-    <section className="py-16 px-4">
-      <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-12">
-        How It Works
-      </h2>
-      <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-        {steps.map((step) => (
-          <div key={step.num} className="text-center">
-            <div className="text-vscode-accent text-4xl font-bold mb-3">{step.num}</div>
-            <h3 className="text-white font-semibold mb-2">{step.title}</h3>
-            <p className="text-vscode-text-muted text-sm">{step.desc}</p>
-          </div>
-        ))}
+    <section className="py-20 px-4 section-gradient">
+      <h2 className="section-heading">How It Works</h2>
+      <p className="section-subheading">From signup to PRD — everything in one place</p>
+
+      <div className="max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
+          {steps.map((step) => (
+            <div key={step.num} className="text-center relative group">
+              <div className="relative mx-auto mb-5 w-20 h-20 rounded-2xl bg-vscode-bg-light border border-vscode-border flex flex-col items-center justify-center group-hover:border-vscode-primary/50 group-hover:shadow-lg group-hover:shadow-vscode-primary/10 group-hover:-translate-y-2 transition-all duration-300">
+                <span className="text-2xl mb-1">{step.icon}</span>
+                <span className="text-vscode-primary text-xs font-bold">{step.num}</span>
+              </div>
+              <h3 className="text-white font-semibold mb-2">{step.title}</h3>
+              <p className="text-vscode-text-muted text-sm leading-relaxed px-2">{step.desc}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
