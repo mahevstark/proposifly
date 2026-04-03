@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
     const userName = body.userName || "Your Name";
 
     /* Try AI first, fall back to dummy */
-    const provider = process.env.AI_PROVIDER || "openai";
+    const provider = (process.env.AI_PROVIDER || "openai").trim();
     let proposal: string;
 
     try {
