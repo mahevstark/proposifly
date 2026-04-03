@@ -1,3 +1,7 @@
+"use client";
+
+import AnimateOnScroll from "@/components/AnimateOnScroll";
+
 const steps = [
   { num: "01", title: "Sign Up Free", desc: "Create your free account in seconds — no credit card needed.", icon: "👤" },
   { num: "02", title: "Add Portfolio & Profiles", desc: "Save your portfolio links and profiles (GitHub, LinkedIn, etc.). Toggle which ones to include.", icon: "🔗" },
@@ -10,20 +14,24 @@ const steps = [
 export default function WorkflowSteps() {
   return (
     <section className="py-20 px-4 section-gradient">
-      <h2 className="section-heading">How It Works</h2>
-      <p className="section-subheading">From signup to PRD — everything in one place</p>
+      <AnimateOnScroll animation="fade-up">
+        <h2 className="section-heading">How It Works</h2>
+        <p className="section-subheading">From signup to PRD — everything in one place</p>
+      </AnimateOnScroll>
 
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
-          {steps.map((step) => (
-            <div key={step.num} className="text-center relative group">
-              <div className="relative mx-auto mb-5 w-20 h-20 rounded-2xl bg-vscode-bg-light border border-vscode-border flex flex-col items-center justify-center group-hover:border-vscode-primary/50 group-hover:shadow-lg group-hover:shadow-vscode-primary/10 group-hover:-translate-y-2 transition-all duration-300">
-                <span className="text-2xl mb-1">{step.icon}</span>
-                <span className="text-vscode-primary text-xs font-bold">{step.num}</span>
+          {steps.map((step, i) => (
+            <AnimateOnScroll key={step.num} animation="fade-up" delay={i * 150}>
+              <div className="text-center relative group">
+                <div className="relative mx-auto mb-5 w-20 h-20 rounded-2xl bg-vscode-bg-light border border-vscode-border flex flex-col items-center justify-center group-hover:border-vscode-primary/50 group-hover:shadow-lg group-hover:shadow-vscode-primary/10 group-hover:-translate-y-2 transition-all duration-300">
+                  <span className="text-2xl mb-1">{step.icon}</span>
+                  <span className="text-vscode-primary text-xs font-bold">{step.num}</span>
+                </div>
+                <h3 className="text-white font-semibold mb-2">{step.title}</h3>
+                <p className="text-vscode-text-muted text-sm leading-relaxed px-2">{step.desc}</p>
               </div>
-              <h3 className="text-white font-semibold mb-2">{step.title}</h3>
-              <p className="text-vscode-text-muted text-sm leading-relaxed px-2">{step.desc}</p>
-            </div>
+            </AnimateOnScroll>
           ))}
         </div>
       </div>

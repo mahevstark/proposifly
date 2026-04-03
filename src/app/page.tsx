@@ -1,7 +1,6 @@
 import HeroSection from "@/components/HeroSection";
-import FeatureCard from "@/components/FeatureCard";
 import WorkflowSteps from "@/components/WorkflowSteps";
-import Link from "next/link";
+import { AnimatedFeatures, AnimatedTestimonials, AnimatedCTA } from "@/components/AnimatedSections";
 
 const features = [
   {
@@ -62,56 +61,10 @@ export default function HomePage() {
   return (
     <div>
       <HeroSection />
-
-      {/* Features grid */}
-      <section className="py-20 px-4">
-        <h2 className="section-heading">Everything You Need to Win Clients</h2>
-        <p className="section-subheading">
-          From AI proposal writing to PRD generation — Proposifly is the complete toolkit for freelancers
-        </p>
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((f) => (
-            <FeatureCard key={f.title} {...f} />
-          ))}
-        </div>
-      </section>
-
+      <AnimatedFeatures features={features} />
       <WorkflowSteps />
-
-      {/* Testimonials */}
-      <section className="py-20 px-4">
-        <h2 className="section-heading">What Freelancers Say</h2>
-        <p className="section-subheading">Join freelancers who are winning more clients with less effort</p>
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((t) => (
-            <div key={t.name} className="glass p-6 text-center">
-              <p className="text-vscode-text leading-relaxed mb-4 italic">&ldquo;{t.quote}&rdquo;</p>
-              <p className="text-vscode-primary text-sm font-medium">— {t.name}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* CTA section */}
-      <section className="py-20 px-4 relative overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-vscode-primary/5 rounded-full blur-3xl" />
-        </div>
-        <div className="relative max-w-2xl mx-auto text-center">
-          <h2 className="section-heading">Ready to Win More Clients?</h2>
-          <p className="text-vscode-text-muted mb-10 text-lg leading-relaxed">
-            Sign up for free, save your portfolio and profile links, and start generating winning proposals with PRD support — in seconds. No credit card. No catch.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/signup" className="btn-primary text-center text-lg px-10 py-3.5">
-              Get Started Free
-            </Link>
-            <Link href="/app" className="btn-secondary text-center text-lg px-10 py-3.5">
-              Try Without Signing Up
-            </Link>
-          </div>
-        </div>
-      </section>
+      <AnimatedTestimonials testimonials={testimonials} />
+      <AnimatedCTA />
     </div>
   );
 }

@@ -30,54 +30,84 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-[70vh] flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-vscode-sidebar border border-vscode-border rounded-lg p-8">
-        <h1 className="text-2xl font-bold text-white mb-2 text-center">Welcome Back</h1>
-        <p className="text-vscode-text-muted text-sm text-center mb-8">
-          Sign in to access your proposals and settings.
-        </p>
+    <div className="min-h-[80vh] flex items-center justify-center px-4 relative overflow-hidden">
+      {/* Background glow */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-vscode-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-1/4 w-[300px] h-[300px] bg-vscode-primary/3 rounded-full blur-3xl" />
+      </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-vscode-text text-sm mb-1">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full bg-vscode-bg border border-vscode-border rounded px-4 py-2.5 text-white placeholder-vscode-text-muted focus:border-vscode-primary focus:outline-none transition-colors"
-              placeholder="you@example.com"
-            />
+      <div className="relative w-full max-w-md">
+        {/* Logo/Icon */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-vscode-primary/10 border border-vscode-primary/20 mb-4">
+            <span className="text-3xl">P</span>
           </div>
+          <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
+          <p className="text-vscode-text-muted">
+            Sign in to access your proposals and settings
+          </p>
+        </div>
 
-          <div>
-            <label className="block text-vscode-text text-sm mb-1">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full bg-vscode-bg border border-vscode-border rounded px-4 py-2.5 text-white placeholder-vscode-text-muted focus:border-vscode-primary focus:outline-none transition-colors"
-              placeholder="••••••••"
-            />
-          </div>
-
-          {error && (
-            <div className="text-vscode-error text-sm bg-vscode-error/10 border border-vscode-error/30 rounded px-4 py-2">
-              {error}
+        {/* Card */}
+        <div className="glass rounded-2xl p-8 border border-vscode-border/50 shadow-2xl shadow-black/20">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="block text-vscode-text text-sm font-medium mb-1.5">Email</label>
+              <div className="relative">
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-vscode-text-muted text-sm">@</span>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="w-full bg-vscode-bg/80 border border-vscode-border rounded-xl pl-9 pr-4 py-3 text-white placeholder-vscode-text-muted/50 focus:border-vscode-primary focus:ring-1 focus:ring-vscode-primary/30 focus:outline-none transition-all"
+                  placeholder="you@example.com"
+                />
+              </div>
             </div>
-          )}
 
-          <Button onClick={() => {}} loading={loading} className="w-full" type="submit">
-            Sign In
-          </Button>
-        </form>
+            <div>
+              <label className="block text-vscode-text text-sm font-medium mb-1.5">Password</label>
+              <div className="relative">
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-vscode-text-muted text-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </span>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="w-full bg-vscode-bg/80 border border-vscode-border rounded-xl pl-9 pr-4 py-3 text-white placeholder-vscode-text-muted/50 focus:border-vscode-primary focus:ring-1 focus:ring-vscode-primary/30 focus:outline-none transition-all"
+                  placeholder="Enter your password"
+                />
+              </div>
+            </div>
 
-        <p className="text-vscode-text-muted text-sm text-center mt-6">
-          Don&apos;t have an account?{" "}
-          <Link href="/signup" className="text-vscode-primary hover:underline">
-            Sign Up
-          </Link>
+            {error && (
+              <div className="flex items-center gap-2 text-vscode-error text-sm bg-vscode-error/10 border border-vscode-error/20 rounded-xl px-4 py-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>
+                {error}
+              </div>
+            )}
+
+            <Button onClick={() => {}} loading={loading} className="w-full !py-3 !rounded-xl !text-base" type="submit">
+              Sign In
+            </Button>
+          </form>
+
+          <div className="mt-6 pt-6 border-t border-vscode-border/30 text-center">
+            <p className="text-vscode-text-muted text-sm">
+              Don&apos;t have an account?{" "}
+              <Link href="/signup" className="text-vscode-primary hover:text-vscode-primary/80 font-medium transition-colors">
+                Sign Up
+              </Link>
+            </p>
+          </div>
+        </div>
+
+        <p className="text-center text-vscode-text-muted/50 text-xs mt-6">
+          Free forever. No credit card required.
         </p>
       </div>
     </div>

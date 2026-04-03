@@ -73,40 +73,70 @@ export default function HistoryPage() {
   if (authLoading) return null;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h1 className="text-2xl font-bold text-white">Proposal History</h1>
-          <p className="text-vscode-text-muted text-sm mt-1">
-            {proposals.length} proposal{proposals.length !== 1 ? "s" : ""} saved
-          </p>
+    <div className="max-w-6xl mx-auto px-4 py-8 relative">
+      {/* Background glow */}
+      <div className="fixed inset-0 pointer-events-none -z-10">
+        <div className="absolute top-20 left-1/4 w-[400px] h-[400px] bg-vscode-primary/3 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/3 right-0 w-[300px] h-[300px] bg-vscode-primary/3 rounded-full blur-3xl" />
+      </div>
+
+      {/* Header */}
+      <div className="glass rounded-2xl p-6 border border-vscode-border/50 mb-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-vscode-primary/10 border border-vscode-primary/20 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-vscode-primary"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-white">Proposal History</h1>
+              <p className="text-vscode-text-muted text-sm">
+                {proposals.length} proposal{proposals.length !== 1 ? "s" : ""} saved
+              </p>
+            </div>
+          </div>
+          <Link href="/app" className="btn-primary text-sm px-5 py-2.5 rounded-xl">New Proposal</Link>
         </div>
-        <Link href="/app" className="btn-primary text-sm px-4 py-2">New Proposal</Link>
       </div>
 
       {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-6">
-        <input type="text" placeholder="Search proposals..." value={search} onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 px-4 py-2 rounded bg-vscode-input border border-vscode-border text-white text-sm placeholder-vscode-text-muted focus:outline-none focus:border-vscode-primary" />
-        <select value={toneFilter} onChange={(e) => setToneFilter(e.target.value)}
-          className="px-4 py-2 rounded bg-vscode-input border border-vscode-border text-white text-sm focus:outline-none focus:border-vscode-primary">
-          <option value="all">All Tones</option>
-          <option value="formal">Formal</option>
-          <option value="casual">Casual</option>
-          <option value="persuasive">Persuasive</option>
-        </select>
-        <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}
-          className="px-4 py-2 rounded bg-vscode-input border border-vscode-border text-white text-sm focus:outline-none focus:border-vscode-primary">
-          <option value="newest">Newest First</option>
-          <option value="oldest">Oldest First</option>
-        </select>
+      <div className="glass rounded-2xl p-4 border border-vscode-border/50 mb-6">
+        <div className="flex flex-col sm:flex-row gap-3">
+          <div className="relative flex-1">
+            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-vscode-text-muted">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </span>
+            <input type="text" placeholder="Search proposals..." value={search} onChange={(e) => setSearch(e.target.value)}
+              className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-vscode-bg/80 border border-vscode-border text-white text-sm placeholder-vscode-text-muted/50 focus:outline-none focus:border-vscode-primary focus:ring-1 focus:ring-vscode-primary/30 transition-all" />
+          </div>
+          <div className="relative">
+            <select value={toneFilter} onChange={(e) => setToneFilter(e.target.value)}
+              className="appearance-none pl-4 pr-9 py-2.5 rounded-xl bg-vscode-bg/80 border border-vscode-border text-white text-sm focus:outline-none focus:border-vscode-primary focus:ring-1 focus:ring-vscode-primary/30 transition-all cursor-pointer">
+              <option value="all">All Tones</option>
+              <option value="formal">Formal</option>
+              <option value="casual">Casual</option>
+              <option value="persuasive">Persuasive</option>
+            </select>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute right-3 top-1/2 -translate-y-1/2 text-vscode-text-muted pointer-events-none"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+          <div className="relative">
+            <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}
+              className="appearance-none pl-4 pr-9 py-2.5 rounded-xl bg-vscode-bg/80 border border-vscode-border text-white text-sm focus:outline-none focus:border-vscode-primary focus:ring-1 focus:ring-vscode-primary/30 transition-all cursor-pointer">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+            </select>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute right-3 top-1/2 -translate-y-1/2 text-vscode-text-muted pointer-events-none"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+        </div>
       </div>
 
       {/* Error Banner */}
       {error && (
-        <div className="mb-4 px-4 py-3 rounded-lg bg-vscode-error/10 border border-vscode-error/30 text-vscode-error text-sm flex items-center justify-between">
-          <span>{error}</span>
-          <button onClick={() => setError("")} className="ml-4 hover:text-white">
+        <div className="mb-4 px-4 py-3 rounded-xl bg-vscode-error/10 border border-vscode-error/20 text-vscode-error text-sm flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>
+            <span>{error}</span>
+          </div>
+          <button onClick={() => setError("")} className="ml-4 hover:text-white transition-colors">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -116,11 +146,23 @@ export default function HistoryPage() {
 
       {/* Proposal List */}
       {loading ? (
-        <div className="text-center py-12 text-vscode-text-muted">Loading proposals...</div>
+        <div className="glass rounded-2xl border border-vscode-border/50 p-12 text-center">
+          <div className="inline-flex items-center gap-3 text-vscode-text-muted">
+            <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+            </svg>
+            Loading proposals...
+          </div>
+        </div>
       ) : proposals.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-vscode-text-muted text-lg mb-4">No proposals yet</p>
-          <Link href="/app" className="btn-primary text-sm px-6 py-2">Generate Your First Proposal</Link>
+        <div className="glass rounded-2xl border border-vscode-border/50 p-12 text-center">
+          <div className="w-16 h-16 rounded-2xl bg-vscode-primary/10 border border-vscode-primary/20 flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-vscode-primary"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
+          </div>
+          <p className="text-vscode-text-muted text-lg mb-1">No proposals yet</p>
+          <p className="text-vscode-text-muted/60 text-sm mb-6">Generate your first proposal to see it here</p>
+          <Link href="/app" className="btn-primary text-sm px-6 py-2.5 rounded-xl">Generate Your First Proposal</Link>
         </div>
       ) : (
         <div className="space-y-3">
