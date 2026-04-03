@@ -4,6 +4,7 @@ import { buildPrompt, callOpenAI, callClaude, callGemini, callGroq } from "@/lib
 
 interface RequestBody extends GenerateProposalRequest {
   profileLinks?: ProfileLink[];
+  userName?: string;
 }
 
 /** Generate a dummy proposal for testing */
@@ -11,7 +12,8 @@ function generateDummyProposal(
   jobDescription: string,
   tone: string,
   portfolioLinks: PortfolioLink[],
-  profileLinks: ProfileLink[]
+  profileLinks: ProfileLink[],
+  userName: string
 ): string {
   const toneStyle: Record<string, string> = {
     formal: "I am writing to express my strong interest in",
@@ -50,7 +52,7 @@ I can start immediately and deliver within 2-3 weeks. I'm flexible on budget and
   proposal += `\n\nLooking forward to discussing this further.
 
 Best regards,
-Badar Madni`;
+${userName}`;
 
   return proposal;
 }
@@ -71,13 +73,14 @@ export async function POST(req: NextRequest) {
     const tone = body.tone || "formal";
     const portfolioLinks = body.portfolioLinks || [];
     const profileLinks = body.profileLinks || [];
+    const userName = body.userName || "Your Name";
 
     /* Try AI first, fall back to dummy */
     const provider = process.env.AI_PROVIDER || "openai";
     let proposal: string;
 
     try {
-      const prompt = buildPrompt(body.jobDescription, tone, portfolioLinks, profileLinks);
+      const prompt = buildPrompt(body.jobDescription, tone, portfolioLinks, profileLinks, userName);
 
       if (provider === "groq" && process.env.GROQ_API_KEY) {
         proposal = await callGroq(prompt);
@@ -88,12 +91,12 @@ export async function POST(req: NextRequest) {
       } else if (process.env.OPENAI_API_KEY) {
         proposal = await callOpenAI(prompt);
       } else {
-        proposal = generateDummyProposal(body.jobDescription, tone, portfolioLinks, profileLinks);
+        proposal = generateDummyProposal(body.jobDescription, tone, portfolioLinks, profileLinks, userName);
       }
     } catch {
       // AI failed — use dummy content
       console.log("AI API failed, using dummy proposal");
-      proposal = generateDummyProposal(body.jobDescription, tone, portfolioLinks, profileLinks);
+      proposal = generateDummyProposal(body.jobDescription, tone, portfolioLinks, profileLinks, userName);
     }
 
     // Strip any markdown formatting (asterisks, hashes, etc.)

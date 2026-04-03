@@ -5,7 +5,8 @@ export function buildPrompt(
   jobDescription: string,
   tone: Tone,
   portfolioLinks: PortfolioLink[],
-  profileLinks: ProfileLink[] = []
+  profileLinks: ProfileLink[] = [],
+  userName: string = "Your Name"
 ): string {
   const toneInstructions: Record<Tone, string> = {
     formal: "Write in a professional, formal tone.",
@@ -28,7 +29,7 @@ IMPORTANT RULES:
 - End with the portfolio links listed with numbering.
 - If profile links are provided, add them AFTER a blank line below the portfolio links. Format each as "Platform: URL" on its own line.
 - Include the portfolio link titles exactly as provided (e.g. "1. Project Name: URL").
-- Always end the proposal with "Best regards" on one line, then "Badar Madni" on the next line.
+- Always end the proposal with "Best regards" on one line, then "${userName}" on the next line.
 
 Job Description:
 ${jobDescription}
@@ -115,6 +116,60 @@ export async function callGemini(prompt: string): Promise<string> {
 
   const data = await res.json();
   return data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
+}
+
+/** Build prompt for PRD generation */
+export function buildPRDPrompt(opts: {
+  jobDescription: string;
+  proposalText: string;
+  budget: string;
+  timeline: string;
+  clientName: string;
+  phases: { number: number; title: string; enabled: boolean }[];
+  toolsTechnologies: string;
+}): string {
+  const enabledPhases = opts.phases.filter((p) => p.enabled);
+  const phaseList = enabledPhases.length > 0
+    ? enabledPhases.map((p, i) => `Phase ${i + 1}: ${p.title}`).join("\n")
+    : "No specific phases defined — create a reasonable phase breakdown.";
+
+  return `You are a professional project manager creating a Project Requirements Document (PRD).
+
+IMPORTANT RULES:
+- STRICTLY FORBIDDEN: Do NOT use asterisks (*) anywhere. No bold, no markdown formatting.
+- Use plain text ONLY with line breaks and numbering for structure.
+- Be detailed but concise. Each section should be actionable.
+- Use the proposal and job description as context for the project scope.
+
+Project Details:
+${opts.clientName ? `Client: ${opts.clientName}` : ""}
+${opts.budget ? `Budget: ${opts.budget}` : ""}
+${opts.timeline ? `Timeline: ${opts.timeline}` : ""}
+${opts.toolsTechnologies ? `Tools & Technologies: ${opts.toolsTechnologies}` : ""}
+
+Original Job Description:
+${opts.jobDescription}
+
+Accepted Proposal:
+${opts.proposalText}
+
+Execution Phases:
+${phaseList}
+
+Generate a comprehensive PRD with these sections:
+1. Project Overview (brief summary, mention client name if provided)
+2. Scope of Work (what's included and excluded)
+3. Tools & Technologies (list all tools/technologies and explain that the project will be built using them — e.g. "This project will be developed using React, Node.js, PostgreSQL...")
+4. Execution Phases (detail each phase with deliverables, milestones, and estimated effort)
+5. Total Cost (display the budget as total project cost with breakdown if possible)
+6. Timeline (display the timeline with milestones mapped to phases)
+7. Acceptance Criteria (how success is measured)
+8. Risks and Mitigations
+9. Communication Plan
+
+IMPORTANT: Tools & Technologies, Total Cost, and Timeline MUST each have their own dedicated heading/section. Do not skip them even if values are brief.
+
+Write the PRD now:`;
 }
 
 /** Call Anthropic Claude API */

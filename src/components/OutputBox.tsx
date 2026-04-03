@@ -37,7 +37,7 @@ export default function OutputBox({ content, loading }: OutputBoxProps) {
         <span className="w-3 h-3 rounded-full bg-vscode-success" />
         <span className="ml-2 text-xs text-vscode-text-muted">proposal.txt</span>
       </div>
-      <pre className="whitespace-pre-wrap text-sm leading-relaxed text-vscode-text font-sans">
+      <pre className="whitespace-pre-wrap break-words overflow-wrap-anywhere text-sm leading-relaxed text-vscode-text font-sans" style={{ overflowWrap: "anywhere", wordBreak: "break-word" }}>
         {content}
       </pre>
     </div>

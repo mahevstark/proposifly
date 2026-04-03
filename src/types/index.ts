@@ -48,3 +48,35 @@ export interface GenerateProposalResponse {
 export interface SavePortfolioRequest {
   links: PortfolioLink[];
 }
+
+/** Saved proposal from DB */
+export interface Proposal {
+  id: number;
+  user_id: number;
+  job_title: string | null;
+  job_description: string;
+  proposal_text: string;
+  tone: Tone;
+  created_at: string;
+}
+
+/** PRD phase item */
+export interface PRDPhase {
+  number: number;
+  title: string;
+  enabled: boolean;
+}
+
+/** Saved PRD from DB */
+export interface PRD {
+  id: number;
+  proposal_id: number;
+  user_id: number;
+  budget: string | null;
+  timeline: string | null;
+  client_name: string | null;
+  phases: PRDPhase[];
+  tools_technologies: string | null;
+  prd_text: string | null;
+  created_at: string;
+}

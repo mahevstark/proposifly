@@ -12,7 +12,10 @@ export default function Header() {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/app", label: "Generator" },
-    ...(user ? [{ href: "/settings", label: "Settings" }] : []),
+    ...(user ? [
+      { href: "/history", label: "History" },
+      { href: "/settings", label: "Settings" },
+    ] : []),
   ];
 
   return (

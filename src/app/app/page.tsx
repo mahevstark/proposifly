@@ -63,6 +63,7 @@ export default function AppPage() {
           tone,
           portfolioLinks: activePortfolio,
           profileLinks: activeProfiles,
+          userName: user?.name || "Your Name",
         }),
       });
 
@@ -73,6 +74,20 @@ export default function AppPage() {
       }
 
       setProposal(data.proposal);
+
+      // Save proposal to DB if logged in
+      if (user) {
+        fetch("/api/proposals", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            jobTitle: jobDesc.slice(0, 100).trim(),
+            jobDescription: jobDesc,
+            proposalText: data.proposal,
+            tone,
+          }),
+        }).catch(console.error);
+      }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Something went wrong.";
       setError(message);
