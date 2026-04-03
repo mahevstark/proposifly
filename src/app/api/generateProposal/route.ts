@@ -93,9 +93,9 @@ export async function POST(req: NextRequest) {
       } else {
         proposal = generateDummyProposal(body.jobDescription, tone, portfolioLinks, profileLinks, userName);
       }
-    } catch {
-      // AI failed — use dummy content
-      console.log("AI API failed, using dummy proposal");
+    } catch (aiErr: unknown) {
+      const aiMsg = aiErr instanceof Error ? aiErr.message : "Unknown AI error";
+      console.error(`AI API failed (provider: ${provider}):`, aiMsg);
       proposal = generateDummyProposal(body.jobDescription, tone, portfolioLinks, profileLinks, userName);
     }
 
