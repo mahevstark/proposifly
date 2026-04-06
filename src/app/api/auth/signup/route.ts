@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     const password_hash = await hashPassword(password);
 
     const result = await pool.query(
-      "INSERT INTO users (email, password_hash, name) VALUES ($1, $2, $3) RETURNING id, email, name",
+      "INSERT INTO users (email, password_hash, name) VALUES ($1, $2, $3) RETURNING id, email, name, role",
       [email.toLowerCase(), password_hash, name || null]
     );
 
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
     );
 
     const response = NextResponse.json({
-      user: { id: user.id, email: user.email, name: user.name },
+      user: { id: user.id, email: user.email, name: user.name, role: user.role || "user" },
     });
 
     response.cookies.set("token", token, {

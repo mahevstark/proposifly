@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
     }
 
     const result = await pool.query(
-      "SELECT id, email, name, password_hash FROM users WHERE email = $1",
+      "SELECT id, email, name, password_hash, COALESCE(role, 'user') as role FROM users WHERE email = $1",
       [email.toLowerCase()]
     );
 
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     const token = signToken({ userId: user.id, email: user.email });
 
     const response = NextResponse.json({
-      user: { id: user.id, email: user.email, name: user.name },
+      user: { id: user.id, email: user.email, name: user.name, role: user.role },
     });
 
     response.cookies.set("token", token, {

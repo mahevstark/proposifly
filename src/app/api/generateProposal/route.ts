@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { GenerateProposalRequest, PortfolioLink, ProfileLink } from "@/types";
 import { buildPrompt } from "@/lib/ai";
 import { callOpenAI, callClaude, callGemini, callGroq } from "@/lib/ai-providers";
+import { getActiveProvider, getApiKey } from "@/lib/ai-keys";
 
 interface RequestBody extends GenerateProposalRequest {
   profileLinks?: ProfileLink[];
@@ -77,19 +78,26 @@ export async function POST(req: NextRequest) {
     const userName = body.userName || "Your Name";
 
     /* Try AI first, fall back to dummy */
-    const provider = (process.env.AI_PROVIDER || "openai").trim();
+    // Check DB for active provider first, then fallback to .env
+    const dbProvider = await getActiveProvider();
+    const provider = dbProvider?.provider || (process.env.AI_PROVIDER || "openai").trim();
     let proposal: string;
 
     try {
       const prompt = buildPrompt(body.jobDescription, tone, portfolioLinks, profileLinks, userName);
+      const key = dbProvider?.apiKey || await getApiKey(provider);
 
-      if (provider === "groq" && process.env.GROQ_API_KEY) {
+      if (provider === "groq" && key) {
+        process.env.GROQ_API_KEY = key;
         proposal = await callGroq(prompt);
-      } else if (provider === "gemini" && process.env.GEMINI_API_KEY) {
+      } else if (provider === "gemini" && key) {
+        process.env.GEMINI_API_KEY = key;
         proposal = await callGemini(prompt);
-      } else if (provider === "claude" && process.env.ANTHROPIC_API_KEY) {
+      } else if (provider === "claude" && key) {
+        process.env.ANTHROPIC_API_KEY = key;
         proposal = await callClaude(prompt);
-      } else if (process.env.OPENAI_API_KEY) {
+      } else if (provider === "openai" && key) {
+        process.env.OPENAI_API_KEY = key;
         proposal = await callOpenAI(prompt);
       } else {
         proposal = generateDummyProposal(body.jobDescription, tone, portfolioLinks, profileLinks, userName);

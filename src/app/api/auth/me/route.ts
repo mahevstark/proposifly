@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
   }
 
   const result = await pool.query(
-    "SELECT id, email, name FROM users WHERE id = $1",
+    "SELECT id, email, name, COALESCE(role, 'user') as role FROM users WHERE id = $1",
     [payload.userId]
   );
 

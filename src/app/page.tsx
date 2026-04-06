@@ -1,4 +1,5 @@
 import HeroSection from "@/components/HeroSection";
+import PlatformsSection from "@/components/PlatformsSection";
 import WorkflowSteps from "@/components/WorkflowSteps";
 import { AnimatedFeatures, AnimatedTestimonials, AnimatedCTA } from "@/components/AnimatedSections";
 
@@ -61,6 +62,7 @@ export default function HomePage() {
   return (
     <div>
       <HeroSection />
+      <PlatformsSection />
       <AnimatedFeatures features={features} />
       <WorkflowSteps />
       <AnimatedTestimonials testimonials={testimonials} />
