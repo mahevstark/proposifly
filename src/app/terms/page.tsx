@@ -65,14 +65,14 @@ export default function TermsPage() {
         <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-vscode-primary/10 border border-vscode-primary/20 mb-3">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-vscode-primary"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
         </div>
-        <h1 className="text-3xl font-bold text-white mb-1">Terms of Service</h1>
+        <h1 className="text-3xl font-bold text-vscode-heading mb-1">Terms of Service</h1>
         <p className="text-vscode-text-muted text-sm">Last updated: April 2025</p>
       </div>
 
       {/* Sections */}
       {sections.map((s, i) => (
         <div key={i} className="glass rounded-2xl p-6 border border-vscode-border/50">
-          <h2 className="text-lg font-semibold text-white mb-3">{s.title}</h2>
+          <h2 className="text-lg font-semibold text-vscode-heading mb-3">{s.title}</h2>
           <p className="text-vscode-text leading-relaxed text-sm">{s.text}</p>
         </div>
       ))}

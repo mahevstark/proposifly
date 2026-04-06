@@ -22,7 +22,7 @@ export default function ProfileForm({ onSave }: ProfileFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="card space-y-4">
-      <h3 className="text-white font-medium">Add Profile</h3>
+      <h3 className="text-vscode-heading font-medium">Add Profile</h3>
       <div className="flex flex-col sm:flex-row gap-3">
         <select
           value={platform}

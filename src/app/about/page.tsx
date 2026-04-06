@@ -37,7 +37,7 @@ export default function AboutPage() {
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-vscode-primary/10 border border-vscode-primary/20 mb-4">
           <span className="text-3xl">P</span>
         </div>
-        <h1 className="text-3xl font-bold text-white mb-3">About Proposifly</h1>
+        <h1 className="text-3xl font-bold text-vscode-heading mb-3">About Proposifly</h1>
         <p className="text-vscode-text leading-relaxed text-lg max-w-2xl mx-auto">
           Proposifly is a free AI-powered proposal and PRD generator built for freelancers who want to win more clients without spending hours writing proposals and project documents.
         </p>
@@ -49,7 +49,7 @@ export default function AboutPage() {
           <div className="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-400"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
           </div>
-          <h2 className="text-xl font-semibold text-white">Our Mission</h2>
+          <h2 className="text-xl font-semibold text-vscode-heading">Our Mission</h2>
         </div>
         <p className="text-vscode-text leading-relaxed mb-3">
           Writing proposals is one of the most time-consuming parts of freelancing. You find the perfect job, but then spend 20-30 minutes crafting a proposal — and sometimes you don&apos;t even get a response. We built Proposifly to change that.
@@ -65,7 +65,7 @@ export default function AboutPage() {
           <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-400"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
-          <h2 className="text-xl font-semibold text-white">Key Features</h2>
+          <h2 className="text-xl font-semibold text-vscode-heading">Key Features</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {features.map((f) => (
@@ -86,7 +86,7 @@ export default function AboutPage() {
           <div className="w-8 h-8 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-400"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>
           </div>
-          <h2 className="text-xl font-semibold text-white">What You Can Do</h2>
+          <h2 className="text-xl font-semibold text-vscode-heading">What You Can Do</h2>
         </div>
         <div className="space-y-2">
           {steps.map((step, i) => (
@@ -107,7 +107,7 @@ export default function AboutPage() {
             <div className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center">
               <span className="text-yellow-400 text-sm">$0</span>
             </div>
-            <h2 className="text-xl font-semibold text-white">Why Free?</h2>
+            <h2 className="text-xl font-semibold text-vscode-heading">Why Free?</h2>
           </div>
           <p className="text-vscode-text leading-relaxed text-sm">
             We believe every freelancer deserves access to tools that help them succeed — regardless of their budget. Proposifly is free to use with no hidden charges, no trial periods, and no credit card required.
@@ -119,7 +119,7 @@ export default function AboutPage() {
             <div className="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-orange-400"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             </div>
-            <h2 className="text-xl font-semibold text-white">Built By Freelancers</h2>
+            <h2 className="text-xl font-semibold text-vscode-heading">Built By Freelancers</h2>
           </div>
           <p className="text-vscode-text leading-relaxed text-sm">
             Created by Badar Madni — a full-stack developer with 10+ years of experience who understands the freelance hustle. After writing thousands of proposals manually, the idea was born: let AI handle the repetitive work.
@@ -129,7 +129,7 @@ export default function AboutPage() {
 
       {/* Contact + CTA */}
       <div className="glass rounded-2xl p-6 border border-vscode-border/50 text-center">
-        <h2 className="text-xl font-semibold text-white mb-2">Get In Touch</h2>
+        <h2 className="text-xl font-semibold text-vscode-heading mb-2">Get In Touch</h2>
         <p className="text-vscode-text leading-relaxed mb-6">
           Have feedback, questions, or feature requests? Reach out at support@proposifly.app
         </p>

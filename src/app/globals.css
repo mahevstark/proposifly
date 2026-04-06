@@ -3,22 +3,70 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Dark theme (default) */
+    --color-bg: 37 37 38;
+    --color-bg-light: 45 45 45;
+    --color-sidebar: 30 30 30;
+    --color-primary: 0 120 212;
+    --color-accent: 215 186 125;
+    --color-text: 204 204 204;
+    --color-text-muted: 128 128 128;
+    --color-hover: 58 61 65;
+    --color-border: 62 62 66;
+    --color-input: 30 30 30;
+    --color-success: 78 201 176;
+    --color-error: 244 71 71;
+    --color-heading: 255 255 255;
+    --color-glass: 255 255 255;
+    --color-overlay: 0 0 0;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --scrollbar-track: rgb(30 30 30);
+    --scrollbar-thumb: rgb(58 61 65);
+    --scrollbar-thumb-hover: rgb(62 62 66);
+  }
+
+  .light {
+    --color-bg: 249 250 251;
+    --color-bg-light: 255 255 255;
+    --color-sidebar: 255 255 255;
+    --color-primary: 0 120 212;
+    --color-accent: 170 130 60;
+    --color-text: 55 65 81;
+    --color-text-muted: 107 114 128;
+    --color-hover: 243 244 246;
+    --color-border: 209 213 219;
+    --color-input: 255 255 255;
+    --color-success: 16 185 129;
+    --color-error: 239 68 68;
+    --color-heading: 17 24 39;
+    --color-glass: 0 0 0;
+    --color-overlay: 0 0 0;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(0, 0, 0, 0.08);
+    --scrollbar-track: rgb(243 244 246);
+    --scrollbar-thumb: rgb(209 213 219);
+    --scrollbar-thumb-hover: rgb(156 163 175);
+  }
+
   body {
     @apply bg-vscode-bg text-vscode-text font-sans;
   }
 
-  /* Custom scrollbar - VS Code style */
+  /* Custom scrollbar */
   ::-webkit-scrollbar {
     @apply w-2;
   }
   ::-webkit-scrollbar-track {
-    @apply bg-vscode-sidebar;
+    background: var(--scrollbar-track);
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-vscode-hover rounded;
+    background: var(--scrollbar-thumb);
+    border-radius: 4px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-vscode-border;
+    background: var(--scrollbar-thumb-hover);
   }
 }
 
@@ -33,7 +81,7 @@
   .btn-secondary {
     @apply bg-transparent text-vscode-text px-5 py-2.5 rounded-lg
            font-medium border border-vscode-border transition-all duration-300
-           hover:border-vscode-primary hover:text-white hover:bg-vscode-primary/10 active:scale-[0.98];
+           hover:border-vscode-primary hover:text-vscode-heading hover:bg-vscode-primary/10 active:scale-[0.98];
   }
 
   .input-field {
@@ -52,7 +100,11 @@
   }
 
   .glass {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem;
   }
 
   .glow-text {
@@ -60,7 +112,7 @@
   }
 
   .section-heading {
-    @apply text-3xl md:text-4xl font-bold text-white text-center mb-4;
+    @apply text-3xl md:text-4xl font-bold text-vscode-heading text-center mb-4;
   }
 
   .section-subheading {
@@ -70,12 +122,17 @@
 
 /* Gradient backgrounds */
 .hero-gradient {
-  background: radial-gradient(ellipse 80% 60% at 50% -20%, rgba(0, 120, 212, 0.15), transparent),
-              radial-gradient(ellipse 60% 40% at 80% 50%, rgba(215, 186, 125, 0.08), transparent);
+  background: radial-gradient(ellipse 80% 60% at 50% -20%, rgb(var(--color-primary) / 0.15), transparent),
+              radial-gradient(ellipse 60% 40% at 80% 50%, rgb(var(--color-accent) / 0.08), transparent);
+}
+
+.light .hero-gradient {
+  background: radial-gradient(ellipse 80% 60% at 50% -20%, rgb(var(--color-primary) / 0.08), transparent),
+              radial-gradient(ellipse 60% 40% at 80% 50%, rgb(var(--color-primary) / 0.04), transparent);
 }
 
 .section-gradient {
-  background: linear-gradient(180deg, transparent 0%, rgba(0, 120, 212, 0.03) 50%, transparent 100%);
+  background: linear-gradient(180deg, transparent 0%, rgb(var(--color-primary) / 0.03) 50%, transparent 100%);
 }
 
 /* Animated gradient border */
@@ -117,8 +174,8 @@
 
 /* Pulse glow */
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(0, 120, 212, 0.2); }
-  50% { box-shadow: 0 0 40px rgba(0, 120, 212, 0.4); }
+  0%, 100% { box-shadow: 0 0 20px rgb(var(--color-primary) / 0.2); }
+  50% { box-shadow: 0 0 40px rgb(var(--color-primary) / 0.4); }
 }
 
 .pulse-glow {

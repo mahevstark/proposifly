@@ -48,7 +48,7 @@ export default function PortfolioList({ links, onEdit, onDelete, onToggle }: Por
           )}
 
           <div className="min-w-0 flex-1">
-            <h3 className="text-white font-medium text-sm truncate">{link.title}</h3>
+            <h3 className="text-vscode-heading font-medium text-sm truncate">{link.title}</h3>
             <a
               href={link.url}
               target="_blank"
@@ -61,7 +61,7 @@ export default function PortfolioList({ links, onEdit, onDelete, onToggle }: Por
           <div className="flex gap-2 shrink-0">
             <button
               onClick={() => onEdit(link)}
-              className="text-xs px-3 py-1.5 rounded bg-vscode-hover text-vscode-text hover:text-white transition-colors"
+              className="text-xs px-3 py-1.5 rounded bg-vscode-hover text-vscode-text hover:text-vscode-heading transition-colors"
             >
               Edit
             </button>

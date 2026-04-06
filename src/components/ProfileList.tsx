@@ -55,7 +55,7 @@ export default function ProfileList({ profiles, onDelete, onToggle }: ProfileLis
 
             {/* Info */}
             <div className="min-w-0 flex-1">
-              <h3 className="text-white font-medium text-sm">{info.label}</h3>
+              <h3 className="text-vscode-heading font-medium text-sm">{info.label}</h3>
               <a
                 href={profile.url}
                 target="_blank"

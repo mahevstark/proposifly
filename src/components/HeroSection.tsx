@@ -16,7 +16,7 @@ export default function HeroSection() {
             100% Free — No Credit Card Required
           </span>
 
-          <h1 className="animate-fade-in-up animate-delay-100 text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
+          <h1 className="animate-fade-in-up animate-delay-100 text-4xl md:text-6xl lg:text-7xl font-bold text-vscode-heading leading-tight mb-6">
             AI Proposals, PRDs &{" "}
             <span className="glow-text">History</span> — All Free
           </h1>
@@ -37,19 +37,19 @@ export default function HeroSection() {
           {/* Stats bar */}
           <div className="animate-fade-in-up animate-delay-400 mt-16 flex flex-wrap justify-center gap-8 md:gap-16">
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-white">10s</div>
+              <div className="text-2xl md:text-3xl font-bold text-vscode-heading">10s</div>
               <div className="text-vscode-text-muted text-sm mt-1">Per Proposal</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-white">3</div>
+              <div className="text-2xl md:text-3xl font-bold text-vscode-heading">3</div>
               <div className="text-vscode-text-muted text-sm mt-1">Tone Options</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-white">PRD</div>
+              <div className="text-2xl md:text-3xl font-bold text-vscode-heading">PRD</div>
               <div className="text-vscode-text-muted text-sm mt-1">Generator Built-in</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-white">Free</div>
+              <div className="text-2xl md:text-3xl font-bold text-vscode-heading">Free</div>
               <div className="text-vscode-text-muted text-sm mt-1">Forever</div>
             </div>
           </div>

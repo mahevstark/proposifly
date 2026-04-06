@@ -96,7 +96,7 @@ export default function HistoryPage() {
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-vscode-primary"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-white">Proposal History</h1>
+              <h1 className="text-2xl font-bold text-vscode-heading">Proposal History</h1>
               <p className="text-vscode-text-muted text-sm">
                 {totalCount} proposal{totalCount !== 1 ? "s" : ""} saved
               </p>
@@ -114,11 +114,11 @@ export default function HistoryPage() {
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
             </span>
             <input type="text" placeholder="Search proposals..." value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-              className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-vscode-bg/80 border border-vscode-border text-white text-sm placeholder-vscode-text-muted/50 focus:outline-none focus:border-vscode-primary focus:ring-1 focus:ring-vscode-primary/30 transition-all" />
+              className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-vscode-bg/80 border border-vscode-border text-vscode-heading text-sm placeholder-vscode-text-muted/50 focus:outline-none focus:border-vscode-primary focus:ring-1 focus:ring-vscode-primary/30 transition-all" />
           </div>
           <div className="relative">
             <select value={toneFilter} onChange={(e) => { setToneFilter(e.target.value); setPage(1); }}
-              className="appearance-none pl-4 pr-9 py-2.5 rounded-xl bg-vscode-bg/80 border border-vscode-border text-white text-sm focus:outline-none focus:border-vscode-primary focus:ring-1 focus:ring-vscode-primary/30 transition-all cursor-pointer">
+              className="appearance-none pl-4 pr-9 py-2.5 rounded-xl bg-vscode-bg/80 border border-vscode-border text-vscode-heading text-sm focus:outline-none focus:border-vscode-primary focus:ring-1 focus:ring-vscode-primary/30 transition-all cursor-pointer">
               <option value="all">All Tones</option>
               <option value="formal">Formal</option>
               <option value="casual">Casual</option>
@@ -128,7 +128,7 @@ export default function HistoryPage() {
           </div>
           <div className="relative">
             <select value={sortOrder} onChange={(e) => { setSortOrder(e.target.value); setPage(1); }}
-              className="appearance-none pl-4 pr-9 py-2.5 rounded-xl bg-vscode-bg/80 border border-vscode-border text-white text-sm focus:outline-none focus:border-vscode-primary focus:ring-1 focus:ring-vscode-primary/30 transition-all cursor-pointer">
+              className="appearance-none pl-4 pr-9 py-2.5 rounded-xl bg-vscode-bg/80 border border-vscode-border text-vscode-heading text-sm focus:outline-none focus:border-vscode-primary focus:ring-1 focus:ring-vscode-primary/30 transition-all cursor-pointer">
               <option value="newest">Newest First</option>
               <option value="oldest">Oldest First</option>
             </select>
@@ -144,7 +144,7 @@ export default function HistoryPage() {
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>
             <span>{error}</span>
           </div>
-          <button onClick={() => setError("")} className="ml-4 hover:text-white transition-colors">
+          <button onClick={() => setError("")} className="ml-4 hover:text-vscode-heading transition-colors">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>

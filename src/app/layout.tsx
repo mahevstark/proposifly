@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { AuthProvider } from "@/context/AuthContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -51,11 +52,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="theme-color" content="#1e1e1e" />
       </head>
       <body className="min-h-screen flex flex-col">
-        <AuthProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </AuthProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

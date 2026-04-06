@@ -37,7 +37,7 @@ export default function CategoryCheckboxes({ selected, onChange, counts }: Categ
                   ? "opacity-30 cursor-not-allowed bg-vscode-hover/30 text-vscode-text-muted border border-vscode-border/20"
                   : isSelected
                   ? "bg-vscode-primary/20 text-vscode-primary border border-vscode-primary/40"
-                  : "bg-vscode-hover/50 text-vscode-text-muted border border-vscode-border/30 hover:text-white"
+                  : "bg-vscode-hover/50 text-vscode-text-muted border border-vscode-border/30 hover:text-vscode-heading"
               }`}
             >
               <span className={`w-4 h-4 rounded border flex items-center justify-center text-xs ${

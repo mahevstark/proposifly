@@ -28,7 +28,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
   const btnActive =
     "bg-vscode-primary/20 border-vscode-primary text-vscode-primary";
   const btnDefault =
-    "bg-vscode-bg/80 border-vscode-border text-vscode-text-muted hover:border-vscode-primary/50 hover:text-white";
+    "bg-vscode-bg/80 border-vscode-border text-vscode-text-muted hover:border-vscode-primary/50 hover:text-vscode-heading";
   const btnDisabled =
     "bg-vscode-bg/40 border-vscode-border/50 text-vscode-text-muted/40 cursor-not-allowed";
 

@@ -98,7 +98,7 @@ export default function PRDPage() {
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
       <div>
         <Link href="/history" className="text-vscode-primary text-sm hover:underline mb-2 inline-block">&larr; Back to History</Link>
-        <h1 className="text-2xl font-bold text-white">PRD Generator</h1>
+        <h1 className="text-2xl font-bold text-vscode-heading">PRD Generator</h1>
         <p className="text-vscode-text-muted text-sm mt-1">Generate a Project Requirements Document from your accepted proposal.</p>
       </div>
 
@@ -112,12 +112,12 @@ export default function PRDPage() {
           <div>
             <label className="block text-sm text-vscode-text mb-1">Client Name</label>
             <input type="text" value={clientName} onChange={(e) => setClientName(e.target.value)} placeholder="e.g. John Smith"
-              className="w-full px-4 py-2 rounded bg-vscode-input border border-vscode-border text-white text-sm placeholder-vscode-text-muted focus:outline-none focus:border-vscode-primary" />
+              className="w-full px-4 py-2 rounded bg-vscode-input border border-vscode-border text-vscode-heading text-sm placeholder-vscode-text-muted focus:outline-none focus:border-vscode-primary" />
           </div>
           <div>
             <label className="block text-sm text-vscode-text mb-1">Budget</label>
             <input type="text" value={budget} onChange={(e) => setBudget(e.target.value)} placeholder="e.g. $5,000 - $10,000"
-              className="w-full px-4 py-2 rounded bg-vscode-input border border-vscode-border text-white text-sm placeholder-vscode-text-muted focus:outline-none focus:border-vscode-primary" />
+              className="w-full px-4 py-2 rounded bg-vscode-input border border-vscode-border text-vscode-heading text-sm placeholder-vscode-text-muted focus:outline-none focus:border-vscode-primary" />
           </div>
         </div>
 
@@ -125,12 +125,12 @@ export default function PRDPage() {
           <div>
             <label className="block text-sm text-vscode-text mb-1">Timeline</label>
             <input type="text" value={timeline} onChange={(e) => setTimeline(e.target.value)} placeholder="e.g. 4-6 weeks"
-              className="w-full px-4 py-2 rounded bg-vscode-input border border-vscode-border text-white text-sm placeholder-vscode-text-muted focus:outline-none focus:border-vscode-primary" />
+              className="w-full px-4 py-2 rounded bg-vscode-input border border-vscode-border text-vscode-heading text-sm placeholder-vscode-text-muted focus:outline-none focus:border-vscode-primary" />
           </div>
           <div>
             <label className="block text-sm text-vscode-text mb-1">Tools & Technologies</label>
             <input type="text" value={toolsTech} onChange={(e) => setToolsTech(e.target.value)} placeholder="e.g. React, Node.js, PostgreSQL"
-              className="w-full px-4 py-2 rounded bg-vscode-input border border-vscode-border text-white text-sm placeholder-vscode-text-muted focus:outline-none focus:border-vscode-primary" />
+              className="w-full px-4 py-2 rounded bg-vscode-input border border-vscode-border text-vscode-heading text-sm placeholder-vscode-text-muted focus:outline-none focus:border-vscode-primary" />
           </div>
         </div>
 
@@ -148,7 +148,7 @@ export default function PRDPage() {
       {prdText && (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-white">Generated PRD</h3>
+            <h3 className="text-lg font-semibold text-vscode-heading">Generated PRD</h3>
             <button onClick={() => handleCopy(prdText)} className="text-sm px-4 py-1.5 rounded bg-vscode-primary/20 text-vscode-primary hover:bg-vscode-primary/30 transition-colors">
               {copied ? "Copied!" : "Copy PRD"}
             </button>

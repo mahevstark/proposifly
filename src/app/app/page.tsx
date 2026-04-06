@@ -123,7 +123,7 @@ export default function AppPage() {
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-vscode-primary"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white">Proposal Generator</h1>
+            <h1 className="text-2xl font-bold text-vscode-heading">Proposal Generator</h1>
             <p className="text-vscode-text-muted text-sm">
               Paste the job description, pick a tone, and let AI do the rest
             </p>
@@ -185,7 +185,7 @@ export default function AppPage() {
             <div className="w-8 h-8 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-400"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
             </div>
-            <h2 className="text-white font-semibold">Generated Proposal</h2>
+            <h2 className="text-vscode-heading font-semibold">Generated Proposal</h2>
           </div>
           <OutputBox content={proposal} loading={loading} />
           <ProposalActions content={proposal} />

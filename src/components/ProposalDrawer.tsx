@@ -38,12 +38,12 @@ export default function ProposalDrawer({ proposal, onClose, formatDate }: Propos
 
   return (
     <>
-      <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={onClose} />
+      <div className="fixed inset-0 bg-vscode-overlay/50 z-40 lg:hidden" onClick={onClose} />
       <div className="fixed top-0 right-0 h-full w-full max-w-lg bg-vscode-sidebar border-l border-vscode-border z-50 overflow-y-auto shadow-2xl">
         <div className="p-6 space-y-6">
           <div className="flex items-start justify-between">
             <div>
-              <h2 className="text-xl font-bold text-white">
+              <h2 className="text-xl font-bold text-vscode-heading">
                 {proposal.job_title || "Proposal Details"}
               </h2>
               <div className="flex items-center gap-2 mt-1">
@@ -53,7 +53,7 @@ export default function ProposalDrawer({ proposal, onClose, formatDate }: Propos
                 <span className="text-vscode-text-muted text-xs">{formatDate(proposal.created_at)}</span>
               </div>
             </div>
-            <button onClick={onClose} className="text-vscode-text-muted hover:text-white p-1">
+            <button onClick={onClose} className="text-vscode-text-muted hover:text-vscode-heading p-1">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>

@@ -43,14 +43,14 @@ export default function LoginPage() {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-vscode-primary/10 border border-vscode-primary/20 mb-4">
             <span className="text-3xl">P</span>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
+          <h1 className="text-3xl font-bold text-vscode-heading mb-2">Welcome Back</h1>
           <p className="text-vscode-text-muted">
             Sign in to access your proposals and settings
           </p>
         </div>
 
         {/* Card */}
-        <div className="glass rounded-2xl p-8 border border-vscode-border/50 shadow-2xl shadow-black/20">
+        <div className="glass rounded-2xl p-8 border border-vscode-border/50 shadow-2xl shadow-vscode-overlay/20">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="block text-vscode-text text-sm font-medium mb-1.5">Email</label>
@@ -61,7 +61,7 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full bg-vscode-bg/80 border border-vscode-border rounded-xl pl-9 pr-4 py-3 text-white placeholder-vscode-text-muted/50 focus:border-vscode-primary focus:ring-1 focus:ring-vscode-primary/30 focus:outline-none transition-all"
+                  className="w-full bg-vscode-bg/80 border border-vscode-border rounded-xl pl-9 pr-4 py-3 text-vscode-heading placeholder-vscode-text-muted/50 focus:border-vscode-primary focus:ring-1 focus:ring-vscode-primary/30 focus:outline-none transition-all"
                   placeholder="you@example.com"
                 />
               </div>
@@ -78,7 +78,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full bg-vscode-bg/80 border border-vscode-border rounded-xl pl-9 pr-4 py-3 text-white placeholder-vscode-text-muted/50 focus:border-vscode-primary focus:ring-1 focus:ring-vscode-primary/30 focus:outline-none transition-all"
+                  className="w-full bg-vscode-bg/80 border border-vscode-border rounded-xl pl-9 pr-4 py-3 text-vscode-heading placeholder-vscode-text-muted/50 focus:border-vscode-primary focus:ring-1 focus:ring-vscode-primary/30 focus:outline-none transition-all"
                   placeholder="Enter your password"
                 />
               </div>

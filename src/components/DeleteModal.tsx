@@ -9,9 +9,9 @@ interface DeleteModalProps {
 export default function DeleteModal({ title, message, deleting, onConfirm, onCancel }: DeleteModalProps) {
   return (
     <>
-      <div className="fixed inset-0 bg-black/60 z-[60]" onClick={() => !deleting && onCancel()} />
+      <div className="fixed inset-0 bg-vscode-overlay/60 z-[60]" onClick={() => !deleting && onCancel()} />
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[70] w-full max-w-sm bg-vscode-sidebar border border-vscode-border rounded-xl shadow-2xl p-6">
-        <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
+        <h3 className="text-lg font-semibold text-vscode-heading mb-2">{title}</h3>
         <p className="text-vscode-text text-sm mb-6">{message}</p>
         <div className="flex justify-end gap-3">
           <button

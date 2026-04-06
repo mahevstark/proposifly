@@ -28,7 +28,7 @@ export default function WorkflowSteps() {
                   <span className="text-2xl mb-1">{step.icon}</span>
                   <span className="text-vscode-primary text-xs font-bold">{step.num}</span>
                 </div>
-                <h3 className="text-white font-semibold mb-2">{step.title}</h3>
+                <h3 className="text-vscode-heading font-semibold mb-2">{step.title}</h3>
                 <p className="text-vscode-text-muted text-sm leading-relaxed px-2">{step.desc}</p>
               </div>
             </AnimateOnScroll>

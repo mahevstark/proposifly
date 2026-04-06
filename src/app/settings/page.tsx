@@ -101,7 +101,7 @@ export default function SettingsPage() {
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-vscode-primary"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white">Settings</h1>
+            <h1 className="text-2xl font-bold text-vscode-heading">Settings</h1>
             <p className="text-vscode-text-muted text-sm">Manage your portfolio links, profiles, and default tone</p>
           </div>
         </div>
@@ -113,7 +113,7 @@ export default function SettingsPage() {
           <div className="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-400"><path d="M12 6V2H8"/><path d="m8 18-4 4V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2Z"/></svg>
           </div>
-          <h2 className="text-lg font-semibold text-white">Default Tone</h2>
+          <h2 className="text-lg font-semibold text-vscode-heading">Default Tone</h2>
         </div>
         <ToneSelector value={tone} onChange={handleToneChange} />
       </div>
@@ -124,7 +124,7 @@ export default function SettingsPage() {
           <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-400"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
           </div>
-          <h2 className="text-lg font-semibold text-white">Portfolio Links</h2>
+          <h2 className="text-lg font-semibold text-vscode-heading">Portfolio Links</h2>
         </div>
         <p className="text-vscode-text-muted text-xs mb-4 ml-10">
           Organize your projects by category. Toggle on/off to control which ones appear in proposals.
@@ -152,7 +152,7 @@ export default function SettingsPage() {
           <div className="w-8 h-8 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-400"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           </div>
-          <h2 className="text-lg font-semibold text-white">Profiles (Optional)</h2>
+          <h2 className="text-lg font-semibold text-vscode-heading">Profiles (Optional)</h2>
         </div>
         <p className="text-vscode-text-muted text-xs mb-4 ml-10">
           Add your GitHub, LinkedIn, or other profiles. Enable them to auto-attach in proposals.

@@ -39,7 +39,7 @@ export default function PhaseSelector({ phases, onToggle }: PhaseSelectorProps) 
               onChange={() => onToggle(index)}
               className="w-4 h-4 rounded border-vscode-border text-vscode-primary focus:ring-vscode-primary bg-vscode-input"
             />
-            <span className="text-white text-sm">
+            <span className="text-vscode-heading text-sm">
               {phase.enabled && (
                 <span className="text-vscode-primary font-semibold mr-2">
                   Phase {getDisplayNumber(index)}:

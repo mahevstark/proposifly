@@ -18,7 +18,7 @@ export default function CategoryTabs({ active, onChange, counts }: CategoryTabsP
           className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium transition-all ${
             active === cat.value
               ? "bg-vscode-primary/20 text-vscode-primary border border-vscode-primary/40"
-              : "bg-vscode-hover/50 text-vscode-text-muted border border-vscode-border/30 hover:text-white hover:border-vscode-border/60"
+              : "bg-vscode-hover/50 text-vscode-text-muted border border-vscode-border/30 hover:text-vscode-heading hover:border-vscode-border/60"
           }`}
         >
           <span>{cat.icon}</span>

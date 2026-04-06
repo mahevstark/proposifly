@@ -51,7 +51,7 @@ export default function PortfolioForm({ editingLink, onSave, onCancel, activeCat
 
   return (
     <form onSubmit={handleSubmit} className="card space-y-4">
-      <h3 className="text-white font-medium">
+      <h3 className="text-vscode-heading font-medium">
         {editingLink ? "Edit Link" : `Add ${PORTFOLIO_CATEGORIES.find((c) => c.value === category)?.label || "Portfolio"} Link`}
       </h3>
       <input

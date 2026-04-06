@@ -28,7 +28,7 @@ export default function ProposalCard({ proposal, isSelected, onSelect, onDelete,
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="text-white font-medium truncate">
+            <h3 className="text-vscode-heading font-medium truncate">
               {proposal.job_title || proposal.job_description.slice(0, 60) + "..."}
             </h3>
             <span className={`text-xs px-2 py-0.5 rounded-full ${toneColors[proposal.tone] || ""}`}>
