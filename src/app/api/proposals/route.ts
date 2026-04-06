@@ -42,28 +42,38 @@ export async function GET(req: NextRequest) {
     const search = url.searchParams.get("search") || "";
     const tone = url.searchParams.get("tone") || "";
     const sort = url.searchParams.get("sort") || "newest";
+    const page = Math.max(1, parseInt(url.searchParams.get("page") || "1", 10));
+    const limit = 7;
+    const offset = (page - 1) * limit;
 
-    let query = `SELECT id, job_title, job_description, proposal_text, tone, created_at
-                 FROM proposals WHERE user_id = $1`;
+    let whereClause = `WHERE user_id = $1`;
     const params: (string | number)[] = [user.userId];
     let paramIndex = 2;
 
     if (search) {
-      query += ` AND (job_title ILIKE $${paramIndex} OR job_description ILIKE $${paramIndex} OR proposal_text ILIKE $${paramIndex})`;
+      whereClause += ` AND (job_title ILIKE $${paramIndex} OR job_description ILIKE $${paramIndex} OR proposal_text ILIKE $${paramIndex})`;
       params.push(`%${search}%`);
       paramIndex++;
     }
 
     if (tone && tone !== "all") {
-      query += ` AND tone = $${paramIndex}`;
+      whereClause += ` AND tone = $${paramIndex}`;
       params.push(tone);
       paramIndex++;
     }
 
-    query += sort === "oldest" ? ` ORDER BY created_at ASC` : ` ORDER BY created_at DESC`;
+    const countQuery = `SELECT COUNT(*) FROM proposals ${whereClause}`;
+    const countResult = await pool.query(countQuery, params);
+    const totalCount = parseInt(countResult.rows[0].count, 10);
+    const totalPages = Math.max(1, Math.ceil(totalCount / limit));
 
-    const result = await pool.query(query, params);
-    return NextResponse.json({ proposals: result.rows });
+    const orderBy = sort === "oldest" ? `ORDER BY created_at ASC` : `ORDER BY created_at DESC`;
+    const dataQuery = `SELECT id, job_title, job_description, proposal_text, tone, created_at
+                       FROM proposals ${whereClause} ${orderBy} LIMIT $${paramIndex} OFFSET $${paramIndex + 1}`;
+    params.push(limit, offset);
+
+    const result = await pool.query(dataQuery, params);
+    return NextResponse.json({ proposals: result.rows, totalCount, page, totalPages });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Internal server error";
     console.error("List proposals error:", message);

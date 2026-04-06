@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import ProposalCard from "@/components/ProposalCard";
 import ProposalDrawer from "@/components/ProposalDrawer";
 import DeleteModal from "@/components/DeleteModal";
+import Pagination from "@/components/Pagination";
 
 export default function HistoryPage() {
   const { user, loading: authLoading } = useAuth();
@@ -22,6 +23,9 @@ export default function HistoryPage() {
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
     if (authLoading) return;
@@ -36,9 +40,12 @@ export default function HistoryPage() {
       if (search) params.set("search", search);
       if (toneFilter !== "all") params.set("tone", toneFilter);
       params.set("sort", sortOrder);
+      params.set("page", String(page));
       const res = await fetch(`/api/proposals?${params.toString()}`);
       const data = await res.json();
       setProposals(data.proposals || []);
+      setTotalPages(data.totalPages || 1);
+      setTotalCount(data.totalCount || 0);
     } catch {
       setError("No internet connection. Please check your network and try again.");
     } finally {
@@ -46,7 +53,8 @@ export default function HistoryPage() {
     }
   };
 
-  useEffect(() => { if (user) fetchProposals(); }, [search, toneFilter, sortOrder]);
+  useEffect(() => { if (user) fetchProposals(); }, [search, toneFilter, sortOrder, page]);
+
 
   const selectedProposal = proposals.find((p) => p.id === selectedId);
 
@@ -90,7 +98,7 @@ export default function HistoryPage() {
             <div>
               <h1 className="text-2xl font-bold text-white">Proposal History</h1>
               <p className="text-vscode-text-muted text-sm">
-                {proposals.length} proposal{proposals.length !== 1 ? "s" : ""} saved
+                {totalCount} proposal{totalCount !== 1 ? "s" : ""} saved
               </p>
             </div>
           </div>
@@ -105,11 +113,11 @@ export default function HistoryPage() {
             <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-vscode-text-muted">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
             </span>
-            <input type="text" placeholder="Search proposals..." value={search} onChange={(e) => setSearch(e.target.value)}
+            <input type="text" placeholder="Search proposals..." value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); }}
               className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-vscode-bg/80 border border-vscode-border text-white text-sm placeholder-vscode-text-muted/50 focus:outline-none focus:border-vscode-primary focus:ring-1 focus:ring-vscode-primary/30 transition-all" />
           </div>
           <div className="relative">
-            <select value={toneFilter} onChange={(e) => setToneFilter(e.target.value)}
+            <select value={toneFilter} onChange={(e) => { setToneFilter(e.target.value); setPage(1); }}
               className="appearance-none pl-4 pr-9 py-2.5 rounded-xl bg-vscode-bg/80 border border-vscode-border text-white text-sm focus:outline-none focus:border-vscode-primary focus:ring-1 focus:ring-vscode-primary/30 transition-all cursor-pointer">
               <option value="all">All Tones</option>
               <option value="formal">Formal</option>
@@ -119,7 +127,7 @@ export default function HistoryPage() {
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="absolute right-3 top-1/2 -translate-y-1/2 text-vscode-text-muted pointer-events-none"><path d="m6 9 6 6 6-6"/></svg>
           </div>
           <div className="relative">
-            <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}
+            <select value={sortOrder} onChange={(e) => { setSortOrder(e.target.value); setPage(1); }}
               className="appearance-none pl-4 pr-9 py-2.5 rounded-xl bg-vscode-bg/80 border border-vscode-border text-white text-sm focus:outline-none focus:border-vscode-primary focus:ring-1 focus:ring-vscode-primary/30 transition-all cursor-pointer">
               <option value="newest">Newest First</option>
               <option value="oldest">Oldest First</option>
@@ -165,13 +173,16 @@ export default function HistoryPage() {
           <Link href="/app" className="btn-primary text-sm px-6 py-2.5 rounded-xl">Generate Your First Proposal</Link>
         </div>
       ) : (
-        <div className="space-y-3">
-          {proposals.map((p) => (
-            <ProposalCard key={p.id} proposal={p} isSelected={selectedId === p.id}
-              onSelect={(id) => { setSelectedId(id); setDrawerOpen(true); }}
-              onDelete={(id) => setDeleteId(id)} formatDate={formatDate} />
-          ))}
-        </div>
+        <>
+          <div className="space-y-3">
+            {proposals.map((p) => (
+              <ProposalCard key={p.id} proposal={p} isSelected={selectedId === p.id}
+                onSelect={(id) => { setSelectedId(id); setDrawerOpen(true); }}
+                onDelete={(id) => setDeleteId(id)} formatDate={formatDate} />
+            ))}
+          </div>
+          <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
+        </>
       )}
 
       {/* Delete Modal */}
