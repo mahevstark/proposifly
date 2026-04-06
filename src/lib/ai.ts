@@ -1,5 +1,36 @@
 import { Tone, PortfolioLink, ProfileLink } from "@/types";
 
+export { callOpenAI, callGroq, callGemini, callClaude } from "./ai-providers";
+
+const CATEGORY_LABELS: Record<string, string> = {
+  web: "Web Apps",
+  mobile: "Mobile Apps",
+  figma: "Figma Designs",
+};
+
+function formatPortfolioLinks(portfolioLinks: PortfolioLink[]): string {
+  if (portfolioLinks.length === 0) return "No portfolio links provided.";
+
+  const grouped: Record<string, PortfolioLink[]> = {};
+  for (const link of portfolioLinks) {
+    const cat = link.category || "web";
+    if (!grouped[cat]) grouped[cat] = [];
+    grouped[cat].push(link);
+  }
+
+  let text = "";
+  let counter = 1;
+  for (const [cat, items] of Object.entries(grouped)) {
+    text += `${CATEGORY_LABELS[cat] || cat}:\n`;
+    for (const l of items) {
+      text += `${counter}. ${l.title}: ${l.url}\n`;
+      counter++;
+    }
+    text += "\n";
+  }
+  return text.trim();
+}
+
 /** Build the prompt for AI proposal generation */
 export function buildPrompt(
   jobDescription: string,
@@ -14,9 +45,7 @@ export function buildPrompt(
     persuasive: "Write in a compelling, persuasive tone that highlights value.",
   };
 
-  const linksText = portfolioLinks.length
-    ? portfolioLinks.map((l, i) => `${i + 1}. ${l.title}: ${l.url}`).join("\n")
-    : "No portfolio links provided.";
+  const linksText = formatPortfolioLinks(portfolioLinks);
 
   return `You are a professional proposal writer. ${toneInstructions[tone]}
 
@@ -39,83 +68,6 @@ ${linksText}
 ${profileLinks.length > 0 ? `\nProfiles:\n${profileLinks.map((p) => `${p.platform.charAt(0).toUpperCase() + p.platform.slice(1)}: ${p.url}`).join("\n")}` : ""}
 
 Write the proposal now:`;
-}
-
-/** Call OpenAI GPT-4 API */
-export async function callOpenAI(prompt: string): Promise<string> {
-  const res = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: "gpt-4",
-      messages: [{ role: "user", content: prompt }],
-      max_tokens: 1500,
-      temperature: 0.7,
-    }),
-  });
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error?.message || `OpenAI API error: ${res.status}`);
-  }
-
-  const data = await res.json();
-  return data.choices[0]?.message?.content?.trim() || "";
-}
-
-/** Call Groq API (Llama 3) */
-export async function callGroq(prompt: string): Promise<string> {
-  const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: "llama-3.3-70b-versatile",
-      messages: [{ role: "user", content: prompt }],
-      max_tokens: 1500,
-      temperature: 0.7,
-    }),
-  });
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error?.message || `Groq API error: ${res.status}`);
-  }
-
-  const data = await res.json();
-  return data.choices[0]?.message?.content?.trim() || "";
-}
-
-/** Call Google Gemini API */
-export async function callGemini(prompt: string): Promise<string> {
-  const apiKey = process.env.GEMINI_API_KEY;
-  const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: {
-          maxOutputTokens: 1500,
-          temperature: 0.7,
-        },
-      }),
-    }
-  );
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error?.message || `Gemini API error: ${res.status}`);
-  }
-
-  const data = await res.json();
-  return data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
 }
 
 /** Build prompt for PRD generation */
@@ -170,29 +122,4 @@ Generate a comprehensive PRD with these sections:
 IMPORTANT: Tools & Technologies, Total Cost, and Timeline MUST each have their own dedicated heading/section. Do not skip them even if values are brief.
 
 Write the PRD now:`;
-}
-
-/** Call Anthropic Claude API */
-export async function callClaude(prompt: string): Promise<string> {
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": process.env.ANTHROPIC_API_KEY || "",
-      "anthropic-version": "2023-06-01",
-    },
-    body: JSON.stringify({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 1500,
-      messages: [{ role: "user", content: prompt }],
-    }),
-  });
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error?.message || `Claude API error: ${res.status}`);
-  }
-
-  const data = await res.json();
-  return data.content[0]?.text?.trim() || "";
 }

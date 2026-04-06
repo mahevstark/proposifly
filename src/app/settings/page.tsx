@@ -3,22 +3,22 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
-import { PortfolioLink, ProfileLink, Tone } from "@/types";
+import { ProfileLink, Tone } from "@/types";
 import PortfolioList from "@/components/PortfolioList";
 import PortfolioForm from "@/components/PortfolioForm";
 import ProfileList from "@/components/ProfileList";
 import ProfileForm from "@/components/ProfileForm";
 import ToneSelector from "@/components/ToneSelector";
+import CategoryTabs from "@/components/CategoryTabs";
+import usePortfolio from "@/hooks/usePortfolio";
 
-/** Settings page — manage portfolio links, profiles, and default tone (requires login) */
 export default function SettingsPage() {
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
-  const [links, setLinks] = useState<PortfolioLink[]>([]);
+  const portfolio = usePortfolio(user);
   const [profiles, setProfiles] = useState<ProfileLink[]>([]);
-  const [editing, setEditing] = useState<PortfolioLink | null>(null);
   const [tone, setTone] = useState<Tone>("formal");
-  const [loading, setLoading] = useState(true);
+  const [profilesLoading, setProfilesLoading] = useState(true);
 
   useEffect(() => {
     if (!authLoading && !user) router.push("/login");
@@ -27,53 +27,16 @@ export default function SettingsPage() {
   useEffect(() => {
     if (!user) return;
     Promise.all([
-      fetch("/api/portfolio").then((r) => r.json()),
       fetch("/api/preferences").then((r) => r.json()),
       fetch("/api/profiles").then((r) => r.json()),
     ])
-      .then(([portfolioData, prefData, profileData]) => {
-        setLinks(portfolioData.links || []);
+      .then(([prefData, profileData]) => {
         setTone(prefData.tone || "formal");
         setProfiles(profileData.profiles || []);
       })
       .catch(console.error)
-      .finally(() => setLoading(false));
+      .finally(() => setProfilesLoading(false));
   }, [user]);
-
-  const handleSave = async (link: PortfolioLink) => {
-    if (editing) {
-      const res = await fetch("/api/portfolio", {
-        method: "PUT", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: link.id, title: link.title, url: link.url }),
-      });
-      const data = await res.json();
-      if (res.ok) setLinks(links.map((l) => (l.id === link.id ? data.link : l)));
-    } else {
-      const res = await fetch("/api/portfolio", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title: link.title, url: link.url }),
-      });
-      const data = await res.json();
-      if (res.ok) setLinks([data.link, ...links]);
-    }
-    setEditing(null);
-  };
-
-  const handleDelete = async (id: string | number) => {
-    const res = await fetch("/api/portfolio", {
-      method: "DELETE", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id }),
-    });
-    if (res.ok) setLinks(links.filter((l) => l.id !== id));
-  };
-
-  const handleToggle = async (id: string | number, is_active: boolean) => {
-    const res = await fetch("/api/portfolio", {
-      method: "PUT", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, is_active }),
-    });
-    if (res.ok) setLinks(links.map((l) => (l.id === id ? { ...l, is_active } : l)));
-  };
 
   const handleAddProfile = async (platform: string, url: string) => {
     const res = await fetch("/api/profiles", {
@@ -122,9 +85,10 @@ export default function SettingsPage() {
     );
   }
 
+  const isLoading = portfolio.loading || profilesLoading;
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-8 space-y-6 relative">
-      {/* Background glow */}
       <div className="fixed inset-0 pointer-events-none -z-10">
         <div className="absolute top-20 right-1/3 w-[400px] h-[400px] bg-vscode-primary/3 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 left-0 w-[300px] h-[300px] bg-vscode-primary/3 rounded-full blur-3xl" />
@@ -138,9 +102,7 @@ export default function SettingsPage() {
           </div>
           <div>
             <h1 className="text-2xl font-bold text-white">Settings</h1>
-            <p className="text-vscode-text-muted text-sm">
-              Manage your portfolio links, profiles, and default tone
-            </p>
+            <p className="text-vscode-text-muted text-sm">Manage your portfolio links, profiles, and default tone</p>
           </div>
         </div>
       </div>
@@ -156,7 +118,7 @@ export default function SettingsPage() {
         <ToneSelector value={tone} onChange={handleToneChange} />
       </div>
 
-      {/* Portfolio management */}
+      {/* Portfolio management with category tabs */}
       <div className="glass rounded-2xl p-6 border border-vscode-border/50">
         <div className="flex items-center gap-2 mb-1">
           <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
@@ -165,9 +127,9 @@ export default function SettingsPage() {
           <h2 className="text-lg font-semibold text-white">Portfolio Links</h2>
         </div>
         <p className="text-vscode-text-muted text-xs mb-4 ml-10">
-          Add your project links. Toggle on/off to control which ones appear in proposals.
+          Organize your projects by category. Toggle on/off to control which ones appear in proposals.
         </p>
-        {loading ? (
+        {isLoading ? (
           <div className="flex items-center gap-2 text-vscode-text-muted text-sm py-4">
             <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
@@ -177,8 +139,9 @@ export default function SettingsPage() {
           </div>
         ) : (
           <div className="space-y-4">
-            <PortfolioList links={links} onEdit={setEditing} onDelete={handleDelete} onToggle={handleToggle} />
-            <PortfolioForm editingLink={editing} onSave={handleSave} onCancel={() => setEditing(null)} />
+            <CategoryTabs active={portfolio.activeCategory} onChange={portfolio.setActiveCategory} counts={portfolio.counts} />
+            <PortfolioList links={portfolio.filteredLinks} onEdit={portfolio.setEditing} onDelete={portfolio.handleDelete} onToggle={portfolio.handleToggle} />
+            <PortfolioForm editingLink={portfolio.editing} onSave={portfolio.handleSave} onCancel={() => portfolio.setEditing(null)} activeCategory={portfolio.activeCategory} />
           </div>
         )}
       </div>
@@ -194,7 +157,7 @@ export default function SettingsPage() {
         <p className="text-vscode-text-muted text-xs mb-4 ml-10">
           Add your GitHub, LinkedIn, or other profiles. Enable them to auto-attach in proposals.
         </p>
-        {loading ? (
+        {isLoading ? (
           <div className="flex items-center gap-2 text-vscode-text-muted text-sm py-4">
             <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>

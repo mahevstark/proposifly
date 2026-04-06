@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
   }
 
   const result = await pool.query(
-    "SELECT id, title, url, is_active, created_at FROM portfolio_links WHERE user_id = $1 ORDER BY created_at DESC",
+    "SELECT id, title, url, is_active, category, created_at FROM portfolio_links WHERE user_id = $1 ORDER BY created_at DESC",
     [user.userId]
   );
 
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { title, url } = await req.json();
+  const { title, url, category = "web" } = await req.json();
 
   if (!title || !url) {
     return NextResponse.json(
@@ -34,8 +34,8 @@ export async function POST(req: NextRequest) {
   }
 
   const result = await pool.query(
-    "INSERT INTO portfolio_links (user_id, title, url, is_active) VALUES ($1, $2, $3, true) RETURNING id, title, url, is_active, created_at",
-    [user.userId, title, url]
+    "INSERT INTO portfolio_links (user_id, title, url, is_active, category) VALUES ($1, $2, $3, true, $4) RETURNING id, title, url, is_active, category, created_at",
+    [user.userId, title, url, category]
   );
 
   return NextResponse.json({ link: result.rows[0] }, { status: 201 });
@@ -70,7 +70,7 @@ export async function PUT(req: NextRequest) {
   // Toggle active status only
   if (id && is_active !== undefined && !title && !url) {
     const result = await pool.query(
-      "UPDATE portfolio_links SET is_active = $1 WHERE id = $2 AND user_id = $3 RETURNING id, title, url, is_active, created_at",
+      "UPDATE portfolio_links SET is_active = $1 WHERE id = $2 AND user_id = $3 RETURNING id, title, url, is_active, category, created_at",
       [is_active, id, user.userId]
     );
     if (result.rows.length === 0) {
@@ -87,7 +87,7 @@ export async function PUT(req: NextRequest) {
   }
 
   const result = await pool.query(
-    "UPDATE portfolio_links SET title = $1, url = $2 WHERE id = $3 AND user_id = $4 RETURNING id, title, url, is_active, created_at",
+    "UPDATE portfolio_links SET title = $1, url = $2 WHERE id = $3 AND user_id = $4 RETURNING id, title, url, is_active, category, created_at",
     [title, url, id, user.userId]
   );
 

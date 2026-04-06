@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GenerateProposalRequest, PortfolioLink, ProfileLink } from "@/types";
-import { buildPrompt, callOpenAI, callClaude, callGemini, callGroq } from "@/lib/ai";
+import { buildPrompt } from "@/lib/ai";
+import { callOpenAI, callClaude, callGemini, callGroq } from "@/lib/ai-providers";
 
 interface RequestBody extends GenerateProposalRequest {
   profileLinks?: ProfileLink[];

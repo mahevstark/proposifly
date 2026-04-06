@@ -1,9 +1,19 @@
+/** Portfolio link categories */
+export type PortfolioCategory = "web" | "mobile" | "figma";
+
+export const PORTFOLIO_CATEGORIES: { value: PortfolioCategory; label: string; icon: string }[] = [
+  { value: "web", label: "Web Apps", icon: "🌐" },
+  { value: "mobile", label: "Mobile Apps", icon: "📱" },
+  { value: "figma", label: "Figma Links", icon: "🎨" },
+];
+
 /** Portfolio link item */
 export interface PortfolioLink {
   id: string | number;
   title: string;
   url: string;
   is_active?: boolean;
+  category?: PortfolioCategory;
 }
 
 /** Tone options for proposal generation */

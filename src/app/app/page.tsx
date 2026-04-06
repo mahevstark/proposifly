@@ -1,14 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Tone, PortfolioLink, ProfileLink } from "@/types";
+import { Tone, PortfolioLink, ProfileLink, PortfolioCategory } from "@/types";
 import { useAuth } from "@/context/AuthContext";
 import Textarea from "@/components/Textarea";
 import ToneSelector from "@/components/ToneSelector";
+import CategoryCheckboxes from "@/components/CategoryCheckboxes";
 import OutputBox from "@/components/OutputBox";
 import ProposalActions from "@/components/ProposalActions";
+import ProposalStatusBar from "@/components/ProposalStatusBar";
 import Button from "@/components/Button";
-import Link from "next/link";
 
 /** Main proposal generator page */
 export default function AppPage() {
@@ -20,6 +21,7 @@ export default function AppPage() {
   const [error, setError] = useState("");
   const [portfolio, setPortfolio] = useState<PortfolioLink[]>([]);
   const [profiles, setProfiles] = useState<ProfileLink[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<PortfolioCategory[]>(["web"]);
 
   /* Load portfolio, profiles, and tone from DB if logged in */
   useEffect(() => {
@@ -40,8 +42,18 @@ export default function AppPage() {
     }
   }, [user, authLoading]);
 
-  const activePortfolio = portfolio.filter((p) => p.is_active !== false);
+  const activePortfolio = portfolio.filter(
+    (p) => p.is_active !== false && selectedCategories.includes((p.category || "web") as PortfolioCategory)
+  );
   const activeProfiles = profiles.filter((p) => p.is_active !== false);
+
+  const categoryCounts = portfolio
+    .filter((p) => p.is_active !== false)
+    .reduce((acc, l) => {
+      const cat = (l.category || "web") as PortfolioCategory;
+      acc[cat] = (acc[cat] || 0) + 1;
+      return acc;
+    }, {} as Record<PortfolioCategory, number>);
 
   /** Call the generate API */
   const handleGenerate = async () => {
@@ -131,34 +143,17 @@ export default function AppPage() {
 
         <ToneSelector value={tone} onChange={setTone} />
 
+        {/* Category selection */}
+        {user && portfolio.length > 0 && (
+          <CategoryCheckboxes
+            selected={selectedCategories}
+            onChange={setSelectedCategories}
+            counts={categoryCounts}
+          />
+        )}
+
         {/* Status indicators */}
-        <div className="text-xs text-vscode-text-muted space-y-1.5 bg-vscode-bg/50 rounded-xl p-3 border border-vscode-border/30">
-          {!user ? (
-            <span className="flex items-center gap-1.5">
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-vscode-primary"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-              <Link href="/login" className="text-vscode-primary hover:underline">Sign in</Link>
-              {" "}to attach your portfolio and profiles automatically.
-            </span>
-          ) : (
-            <>
-              <div className="flex items-center gap-1.5">
-                {activePortfolio.length > 0
-                  ? <><span className="text-green-400">&#10003;</span> {activePortfolio.length} portfolio link(s) will be attached</>
-                  : (
-                    <span className="flex items-center gap-1.5">
-                      <span className="text-yellow-400">&#9888;</span> No portfolio links —{" "}
-                      <Link href="/settings" className="text-vscode-primary hover:underline">add them in Settings</Link>
-                    </span>
-                  )}
-              </div>
-              {activeProfiles.length > 0 && (
-                <div className="flex items-center gap-1.5">
-                  <span className="text-green-400">&#10003;</span> {activeProfiles.length} profile(s) will be attached
-                </div>
-              )}
-            </>
-          )}
-        </div>
+        <ProposalStatusBar user={user} activePortfolio={activePortfolio} activeProfiles={activeProfiles} />
 
         {error && (
           <div className="flex items-center gap-2 text-vscode-error text-sm bg-vscode-error/10 border border-vscode-error/20 rounded-xl px-4 py-3">
