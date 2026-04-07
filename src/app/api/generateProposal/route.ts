@@ -107,6 +107,17 @@ export async function POST(req: NextRequest) {
   try {
     const body: RequestBody = await req.json();
 
+    /* Check maintenance mode */
+    try {
+      const mResult = await pool.query("SELECT value FROM site_settings WHERE key = 'maintenance_mode'");
+      if (mResult.rows[0]?.value === "true") {
+        return NextResponse.json(
+          { error: "System is under maintenance. Please try again later." },
+          { status: 503 }
+        );
+      }
+    } catch { /* ignore — allow generation if check fails */ }
+
     /* Validate input */
     if (!body.jobDescription?.trim()) {
       return NextResponse.json(
