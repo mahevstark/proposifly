@@ -32,16 +32,41 @@ ${intro} this opportunity. After reviewing your requirements, I'm confident my s
 
 I understand you're looking for someone to handle "${jobSnippet}..." — I have 10+ years of experience delivering similar projects on time and within budget.
 
-Here's how I'd approach this:
-I'll start with a thorough analysis of your requirements, deliver an initial draft within the first week, and iterate based on your feedback until the result exceeds your expectations.
+My Approach:
+I'll start by understanding your requirements for "${jobSnippet}...", then build a structured solution tailored to your needs and iterate with your feedback until the result exceeds your expectations.
 
 I can start immediately and deliver within 2-3 weeks. I'm flexible on budget and happy to discuss a rate that works for both of us.`;
 
   if (portfolioLinks.length > 0) {
-    proposal += `\n\nHere's some of my relevant work:`;
-    portfolioLinks.forEach((link, i) => {
-      proposal += `\n${i + 1}. ${link.title}: ${link.url}`;
-    });
+    const grouped: Record<string, typeof portfolioLinks> = {};
+    for (const link of portfolioLinks) {
+      const cat = link.category || "web";
+      if (!grouped[cat]) grouped[cat] = [];
+      grouped[cat].push(link);
+    }
+    const catNames: Record<string, string> = { web: "web applications", mobile: "mobile apps", figma: "Figma designs" };
+    const categories = Object.keys(grouped);
+    const catList = categories.map(c => catNames[c] || c);
+    let intro = "Here are some of my ";
+    if (catList.length === 1) {
+      intro += catList[0];
+    } else if (catList.length === 2) {
+      intro += `${catList[0]} and ${catList[1]}`;
+    } else {
+      intro += catList.slice(0, -1).join(", ") + ", and " + catList[catList.length - 1];
+    }
+    proposal += `\n\n${intro}:`;
+    const catHeadings: Record<string, string> = { web: "Web Apps", mobile: "Mobile Apps", figma: "Figma Designs" };
+    let counter = 1;
+    for (const [cat, items] of Object.entries(grouped)) {
+      if (categories.length > 1) {
+        proposal += `\n\n${catHeadings[cat] || cat}:`;
+      }
+      for (const link of items) {
+        proposal += `\n${counter}. ${link.title}: ${link.url}`;
+        counter++;
+      }
+    }
   }
 
   if (profileLinks.length > 0) {
