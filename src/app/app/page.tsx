@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Tone, PortfolioLink, ProfileLink, PortfolioCategory } from "@/types";
 import { useAuth } from "@/context/AuthContext";
 import Textarea from "@/components/Textarea";
@@ -14,6 +14,7 @@ import Button from "@/components/Button";
 /** Main proposal generator page */
 export default function AppPage() {
   const { user, loading: authLoading } = useAuth();
+  const proposalRef = useRef<HTMLDivElement>(null);
   const [jobDesc, setJobDesc] = useState("");
   const [tone, setTone] = useState<Tone>("formal");
   const [proposal, setProposal] = useState("");
@@ -86,6 +87,11 @@ export default function AppPage() {
       }
 
       setProposal(data.proposal);
+
+      // Scroll to the generated proposal
+      setTimeout(() => {
+        proposalRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
 
       // Save proposal to DB if logged in
       if (user) {
@@ -180,7 +186,7 @@ export default function AppPage() {
 
       {/* Output section */}
       {(proposal || loading) && (
-        <div className="glass rounded-2xl p-6 border border-vscode-border/50 space-y-4">
+        <div ref={proposalRef} className="glass rounded-2xl p-6 border border-vscode-border/50 space-y-4">
           <div className="flex items-center gap-2 mb-2">
             <div className="w-8 h-8 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-400"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
