@@ -15,6 +15,7 @@ import Button from "@/components/Button";
 export default function AppPage() {
   const { user, loading: authLoading } = useAuth();
   const proposalRef = useRef<HTMLDivElement>(null);
+  const [maintenance, setMaintenance] = useState(false);
   const [jobDesc, setJobDesc] = useState("");
   const [tone, setTone] = useState<Tone>("formal");
   const [proposal, setProposal] = useState("");
@@ -23,6 +24,11 @@ export default function AppPage() {
   const [portfolio, setPortfolio] = useState<PortfolioLink[]>([]);
   const [profiles, setProfiles] = useState<ProfileLink[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<PortfolioCategory[]>(["web"]);
+
+  /* Check maintenance mode */
+  useEffect(() => {
+    fetch("/api/maintenance").then((r) => r.json()).then((d) => setMaintenance(d.maintenance)).catch(() => {});
+  }, []);
 
   /* Load portfolio, profiles, and tone from DB if logged in */
   useEffect(() => {
@@ -88,6 +94,9 @@ export default function AppPage() {
 
       setProposal(data.proposal);
 
+      // Re-check maintenance status after generation
+      fetch("/api/maintenance").then((r) => r.json()).then((d) => setMaintenance(d.maintenance)).catch(() => {});
+
       // Scroll to the generated proposal
       setTimeout(() => {
         proposalRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -121,6 +130,19 @@ export default function AppPage() {
         <div className="absolute top-20 right-1/4 w-[400px] h-[400px] bg-vscode-primary/3 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 left-0 w-[300px] h-[300px] bg-vscode-primary/3 rounded-full blur-3xl" />
       </div>
+
+      {/* Maintenance Banner */}
+      {maintenance && (
+        <div className="rounded-2xl p-4 border border-red-500/30 bg-red-500/10 flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-red-500/20 border border-red-500/30 flex items-center justify-center flex-shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-red-400"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M2.586 16.726A2 2 0 0 0 4.172 20h15.656a2 2 0 0 0 1.586-3.274L13.586 3.053a2 2 0 0 0-3.172 0z"/></svg>
+          </div>
+          <div>
+            <p className="text-red-600 dark:text-red-400 font-semibold text-sm">System Under Maintenance</p>
+            <p className="text-red-500/80 dark:text-red-400/70 text-xs">AI service is temporarily unavailable due to API limits. Proposals will use a basic template until service is restored.</p>
+          </div>
+        </div>
+      )}
 
       {/* Header */}
       <div className="glass rounded-2xl p-6 border border-vscode-border/50">
@@ -169,8 +191,8 @@ export default function AppPage() {
         )}
 
         <div className="flex gap-3">
-          <Button onClick={handleGenerate} loading={loading} className="w-full sm:w-auto">
-            Generate Proposal
+          <Button onClick={handleGenerate} loading={loading} disabled={maintenance} className="w-full sm:w-auto">
+            {maintenance ? "Under Maintenance" : "Generate Proposal"}
           </Button>
           {(jobDesc || proposal) && (
             <Button

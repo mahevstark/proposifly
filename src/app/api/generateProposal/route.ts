@@ -3,6 +3,24 @@ import { GenerateProposalRequest, PortfolioLink, ProfileLink } from "@/types";
 import { buildPrompt } from "@/lib/ai";
 import { callOpenAI, callClaude, callGemini, callGroq } from "@/lib/ai-providers";
 import { getActiveProvider, getApiKey } from "@/lib/ai-keys";
+import pool from "@/lib/db";
+
+/** Set maintenance mode in DB */
+async function setMaintenanceMode(enabled: boolean) {
+  try {
+    await pool.query(
+      "INSERT INTO site_settings (key, value, updated_at) VALUES ('maintenance_mode', $1, NOW()) ON CONFLICT (key) DO UPDATE SET value = $1, updated_at = NOW()",
+      [enabled ? "true" : "false"]
+    );
+  } catch (e) {
+    console.error("Failed to update maintenance mode:", e);
+  }
+}
+
+/** Check if error is a rate limit error */
+function isRateLimitError(msg: string): boolean {
+  return msg.toLowerCase().includes("rate limit") || msg.toLowerCase().includes("too many requests") || msg.includes("429");
+}
 
 interface RequestBody extends GenerateProposalRequest {
   profileLinks?: ProfileLink[];
@@ -127,9 +145,18 @@ export async function POST(req: NextRequest) {
       } else {
         proposal = generateDummyProposal(body.jobDescription, tone, portfolioLinks, profileLinks, userName);
       }
+
+      // AI call succeeded — clear maintenance mode
+      await setMaintenanceMode(false);
     } catch (aiErr: unknown) {
       const aiMsg = aiErr instanceof Error ? aiErr.message : "Unknown AI error";
       console.error(`AI API failed (provider: ${provider}):`, aiMsg);
+
+      // If rate limit hit, activate maintenance mode
+      if (isRateLimitError(aiMsg)) {
+        await setMaintenanceMode(true);
+      }
+
       proposal = generateDummyProposal(body.jobDescription, tone, portfolioLinks, profileLinks, userName);
     }
 

@@ -17,16 +17,23 @@ interface Stats {
   proposalsByDay: { date: string; proposals: number }[];
   usersByDay: { date: string; users: number }[];
   toneBreakdown: { tone: string; count: number }[];
+  maintenance?: boolean;
 }
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [maintenance, setMaintenance] = useState(false);
 
   useEffect(() => {
-    fetch("/api/admin/stats")
-      .then((r) => r.json())
-      .then(setStats)
+    Promise.all([
+      fetch("/api/admin/stats").then((r) => r.json()),
+      fetch("/api/admin/maintenance").then((r) => r.json()),
+    ])
+      .then(([statsData, maintenanceData]) => {
+        setStats(statsData);
+        setMaintenance(maintenanceData.maintenance || false);
+      })
       .catch(console.error)
       .finally(() => setLoading(false));
   }, []);
@@ -47,6 +54,56 @@ export default function AdminDashboard() {
         <div className="absolute top-1/2 -right-48 w-[400px] h-[400px] rounded-full bg-violet-600/5 blur-[100px]" />
         <div className="absolute bottom-0 left-1/3 w-[300px] h-[300px] rounded-full bg-amber-500/4 blur-[80px]" />
       </div>
+
+      {/* Maintenance Banner */}
+      {maintenance && (
+        <div className="rounded-xl p-4 border border-red-500/30 bg-red-500/10 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-red-500/20 border border-red-500/30 flex items-center justify-center flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-red-400"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M2.586 16.726A2 2 0 0 0 4.172 20h15.656a2 2 0 0 0 1.586-3.274L13.586 3.053a2 2 0 0 0-3.172 0z"/></svg>
+            </div>
+            <div>
+              <p className="text-red-400 font-semibold text-sm">Maintenance Mode Active</p>
+              <p className="text-red-400/70 text-xs">AI API rate limit reached. Users see a maintenance banner. It will auto-clear when the API works again.</p>
+            </div>
+          </div>
+          <button
+            onClick={() => {
+              fetch("/api/admin/maintenance", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ enabled: false }) })
+                .then(() => setMaintenance(false))
+                .catch(console.error);
+            }}
+            className="px-3 py-1.5 rounded-lg text-xs font-medium bg-red-500/20 border border-red-500/30 text-red-300 hover:bg-red-500/30 transition-colors flex-shrink-0"
+          >
+            Clear Manually
+          </button>
+        </div>
+      )}
+
+      {/* Maintenance Toggle (when not in maintenance) */}
+      {!maintenance && (
+        <div className="rounded-xl p-4 border border-white/10 bg-white/5 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-green-500/20 border border-green-500/30 flex items-center justify-center flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-400"><path d="M20 6 9 17l-5-5"/></svg>
+            </div>
+            <div>
+              <p className="text-green-400 font-semibold text-sm">System Online</p>
+              <p className="text-white/40 text-xs">All services running normally. Maintenance mode will auto-activate if API rate limits are hit.</p>
+            </div>
+          </div>
+          <button
+            onClick={() => {
+              fetch("/api/admin/maintenance", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ enabled: true }) })
+                .then(() => setMaintenance(true))
+                .catch(console.error);
+            }}
+            className="px-3 py-1.5 rounded-lg text-xs font-medium bg-red-500/20 border border-red-500/30 text-red-300 hover:bg-red-500/30 transition-colors flex-shrink-0"
+          >
+            Enable Maintenance
+          </button>
+        </div>
+      )}
 
       {/* Header */}
       <div>
