@@ -56,11 +56,7 @@ IMPORTANT RULES:
 - Always mention 10+ years of experience.
 - Do NOT repeat the full job description back. Just show you understand it briefly.
 - Include a "My Approach" section (1-2 lines only) that is SPECIFIC to the job description. Explain exactly how you would build/execute THIS particular project (e.g. "I will start by designing the UI in Figma, then build the frontend in React and integrate with your existing API"). This should make the client feel confident you understand their project and have a clear plan.
-- When listing portfolio links, start with a single intro line that mentions ALL the categories present. Examples:
-  If only web links: "Here are some of my web applications:"
-  If only mobile: "Here are some of my mobile apps:"
-  If web + mobile: "Here are some of my web applications and mobile apps:"
-  If all three: "Here are some of my web applications, mobile apps, and Figma designs:"
+- When listing portfolio links, start with a single intro line that mentions ONLY the categories that are actually present in the portfolio links below. Do NOT mention categories that have no links. For example, if only web links exist, say "Here are some of my web applications:" — do NOT mention mobile apps or Figma designs unless they actually appear in the portfolio list.
   Then if multiple categories exist, list them under separate sub-headings (Web Apps:, Mobile Apps:, Figma Designs:) with numbered links under each. If only one category, just list the links directly without a sub-heading.
 - If profile links are provided, add them AFTER a blank line below the portfolio links. Format each as "Platform: URL" on its own line.
 - Include the portfolio link titles exactly as provided (e.g. "1. Project Name: URL").
