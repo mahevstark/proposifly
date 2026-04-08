@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"npx vercel ls --limit 3 2>&1\",\"description\":\"Check recent Vercel deployments\"}",
+  "error": "Exit code 1\nVercel CLI 50.23.2\nError: unknown or unexpected option: --limit",
+  "timestamp": "2026-04-07T18:40:08.544Z",
+  "retry_count": 1
+}

@@ -1,0 +1,6 @@
+{"t":0,"agent":"acca935","agent_type":"Explore","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"acca935","agent_type":"Explore","event":"agent_stop","success":true,"duration_ms":31495}
+{"t":0,"agent":"a84267c","agent_type":"executor","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"a0eab41","agent_type":"executor","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"a0eab41","agent_type":"executor","event":"agent_stop","success":true,"duration_ms":122988}
+{"t":0,"agent":"a84267c","agent_type":"executor","event":"agent_stop","success":true,"duration_ms":131133}
