@@ -68,10 +68,24 @@ export default function AdminDashboard() {
             </div>
           </div>
           <button
-            onClick={() => {
-              fetch("/api/admin/maintenance", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ enabled: false }) })
-                .then(() => setMaintenance(false))
-                .catch(console.error);
+            onClick={async () => {
+              try {
+                const res = await fetch("/api/admin/maintenance", {
+                  method: "PUT",
+                  headers: { "Content-Type": "application/json" },
+                  credentials: "include",
+                  body: JSON.stringify({ enabled: false }),
+                });
+                if (res.ok) {
+                  setMaintenance(false);
+                } else {
+                  const data = await res.json();
+                  alert("Failed to clear: " + (data.error || res.statusText));
+                }
+              } catch (err) {
+                console.error(err);
+                alert("Network error clearing maintenance");
+              }
             }}
             className="px-3 py-1.5 rounded-lg text-xs font-medium bg-red-500/20 border border-red-500/30 text-red-300 hover:bg-red-500/30 transition-colors flex-shrink-0"
           >
@@ -93,10 +107,24 @@ export default function AdminDashboard() {
             </div>
           </div>
           <button
-            onClick={() => {
-              fetch("/api/admin/maintenance", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ enabled: true }) })
-                .then(() => setMaintenance(true))
-                .catch(console.error);
+            onClick={async () => {
+              try {
+                const res = await fetch("/api/admin/maintenance", {
+                  method: "PUT",
+                  headers: { "Content-Type": "application/json" },
+                  credentials: "include",
+                  body: JSON.stringify({ enabled: true }),
+                });
+                if (res.ok) {
+                  setMaintenance(true);
+                } else {
+                  const data = await res.json();
+                  alert("Failed: " + (data.error || res.statusText));
+                }
+              } catch (err) {
+                console.error(err);
+                alert("Network error toggling maintenance");
+              }
             }}
             className="px-3 py-1.5 rounded-lg text-xs font-medium bg-red-500/20 border border-red-500/30 text-red-300 hover:bg-red-500/30 transition-colors flex-shrink-0"
           >
