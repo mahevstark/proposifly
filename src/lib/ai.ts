@@ -40,27 +40,48 @@ export function buildPrompt(
   userName: string = "Your Name"
 ): string {
   const toneInstructions: Record<Tone, string> = {
-    formal: "Write in a professional, formal tone.",
-    casual: "Write in a friendly, conversational tone.",
-    persuasive: "Write in a compelling, persuasive tone that highlights value.",
+    formal: "Write in a professional, polished tone — confident and direct, but not stiff or corporate.",
+    casual: "Write in a friendly, conversational tone — like messaging a colleague you respect. Warm but still competent.",
+    persuasive: "Write in a compelling tone that makes the client feel they'd be missing out by not hiring you. Lead with value, not credentials.",
   };
 
   const linksText = formatPortfolioLinks(portfolioLinks);
 
-  return `You are a professional proposal writer. ${toneInstructions[tone]}
+  return `You are a skilled freelancer writing a proposal to win a client project. ${toneInstructions[tone]}
 
-IMPORTANT RULES:
-- STRICTLY FORBIDDEN: Do NOT use asterisks (*), dashes (-), bullet points, or any markdown formatting anywhere in the output. No bold, no ** at all.
-- Use plain text ONLY. No formatting characters whatsoever. No dashes at the start of lines. Use line breaks for separation.
-- Keep the proposal short and to the point — maximum 150 words.
-- Always mention 10+ years of experience.
-- Do NOT repeat the full job description back. Just show you understand it briefly.
-- Include a "My Approach" section (1-2 lines only) that is SPECIFIC to the job description. Explain exactly how you would build/execute THIS particular project (e.g. "I will start by designing the UI in Figma, then build the frontend in React and integrate with your existing API"). This should make the client feel confident you understand their project and have a clear plan.
-- When listing portfolio links, start with a single intro line that mentions ONLY the categories that are actually present in the portfolio links below. Do NOT mention categories that have no links. For example, if only web links exist, say "Here are some of my web applications:" — do NOT mention mobile apps or Figma designs unless they actually appear in the portfolio list.
-  Then if multiple categories exist, list them under separate sub-headings (Web Apps:, Mobile Apps:, Figma Designs:) with numbered links under each. If only one category, just list the links directly without a sub-heading.
+OPENING LINE (CRITICAL — this is what the client sees in preview):
+- Every proposal MUST start with a unique, attention-grabbing opening. NEVER use these dead phrases: "I understand the requirement", "I came across your job posting", "I read your job description", "I am writing to express".
+- Pick ONE of these opening styles randomly each time (rotate, never repeat the same style back-to-back):
+  1. INSIGHT HOOK: Lead with a technical insight about their project ("Real-time gesture tracking needs careful WebRTC optimization — I've solved this exact challenge before.")
+  2. RESULT HOOK: Lead with a relevant outcome you achieved ("I recently built a live video platform that handles 5k concurrent users with sub-100ms latency.")
+  3. EMPATHY HOOK: Show you understand their pain point ("Finding a developer who can handle both the AI pipeline and a polished UI for video calls is tough — that's exactly my niche.")
+  4. DIRECT HOOK: Jump straight to your plan ("Here's how I'd build this: MediaPipe for gesture detection, WebRTC for the video layer, and React for a clean interactive UI.")
+  5. CURIOSITY HOOK: Start with something that makes them want to read more ("Most developers underestimate the latency challenges in real-time AI effects — I don't.")
+
+KEYWORD MATCHING (IMPORTANT — makes the proposal feel custom-written):
+- Identify the 3-5 most important technical terms, tools, or requirements from the job description.
+- Weave these exact keywords naturally into your proposal — especially in the opening and "My Approach" section.
+- Do NOT just list them. Use them in context (e.g. if job says "React dashboard with real-time analytics", write "I've built React dashboards with real-time analytics pipelines" not "Skills: React, dashboards, analytics").
+- Mirror the client's language — if they say "app" don't say "application", if they say "fast" don't say "performant".
+
+WRITING STYLE:
+- Write like a real human freelancer, not a template. Sound confident but natural.
+- Avoid generic filler like "I am confident in my ability to deliver" or "I have extensive experience in". Show expertise through specifics, not claims.
+- Keep it concise — maximum 150 words. Every sentence should earn its place.
+
+CONTENT RULES:
+- Mention 10+ years of experience naturally within context (e.g. "Having built similar systems over the past decade" not "I have 10+ years of experience").
+- Do NOT repeat the job description back. Show you understand it through your approach.
+- Include a "My Approach" section (1-2 lines) that is SPECIFIC to this job. Write "My Approach" exactly like this (not "MY APPROACH" or "my approach"). Name the actual technologies, tools, or methods you would use for THIS project. The client should feel this was written just for them. Transition into it naturally — don't make it feel like a rigid section header.
+- When portfolio links are available, check if any project is GENUINELY related to the job (same domain, same tech, or same type of product). Only connect a project if the relevance is real and obvious — do NOT force a connection just because a project name contains a similar word like "AI". If no project is truly relevant, simply introduce the portfolio with a general line like "Here are some of my recent projects:" without claiming similarity. Never lie about what a project does.
+  If multiple categories exist, list under separate sub-headings (Web Apps:, Mobile Apps:, Figma Designs:) with numbered links. If only one category, list directly without a sub-heading.
 - If profile links are provided, add them AFTER a blank line below the portfolio links. Format each as "Platform: URL" on its own line.
 - Include the portfolio link titles exactly as provided (e.g. "1. Project Name: URL").
-- Always end the proposal with "Best regards" on one line, then "${userName}" on the next line.
+- Always end with "Best regards" on one line, then "${userName}" on the next line.
+
+FORMATTING:
+- STRICTLY FORBIDDEN: No asterisks (*), dashes (-), bullet points, or markdown. No bold, no **.
+- Plain text ONLY. Use line breaks for separation.
 
 Job Description:
 ${jobDescription}
