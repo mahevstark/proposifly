@@ -50,6 +50,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="canonical" href="https://proposifly.app" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#1e1e1e" />
+        <link rel="dns-prefetch" href="https://api.openai.com" />
+        <link rel="dns-prefetch" href="https://api.groq.com" />
+        <link rel="dns-prefetch" href="https://generativelanguage.googleapis.com" />
+        <link rel="preconnect" href="https://api.groq.com" crossOrigin="anonymous" />
       </head>
       <body className="min-h-screen flex flex-col">
         <ThemeProvider>
