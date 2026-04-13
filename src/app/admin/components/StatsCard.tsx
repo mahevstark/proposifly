@@ -1,5 +1,7 @@
 "use client";
 
+import { useTheme } from "@/context/ThemeContext";
+
 interface StatsCardProps {
   title: string;
   value: string | number;
@@ -9,10 +11,16 @@ interface StatsCardProps {
 }
 
 export default function StatsCard({ title, value, icon, gradient, glowColor }: StatsCardProps) {
+  const { theme } = useTheme();
+  const isLight = theme === "light";
+
   return (
     <div
       className="group relative overflow-hidden rounded-2xl p-5 transition-all duration-300 cursor-default"
-      style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+      style={{
+        background: isLight ? "rgba(0,0,0,0.03)" : "rgba(255,255,255,0.03)",
+        border: isLight ? "1px solid rgba(0,0,0,0.06)" : "1px solid rgba(255,255,255,0.06)",
+      }}
     >
       {/* Hover glow bleed */}
       <div
@@ -29,8 +37,14 @@ export default function StatsCard({ title, value, icon, gradient, glowColor }: S
           </svg>
         </div>
         <div className="min-w-0">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-white/35 truncate">{title}</p>
-          <p className="text-2xl font-bold text-white mt-0.5 font-mono leading-none">{value}</p>
+          <p
+            className="text-[10px] font-semibold uppercase tracking-[0.12em] truncate"
+            style={{ color: isLight ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.35)" }}
+          >{title}</p>
+          <p
+            className="text-2xl font-bold mt-0.5 font-mono leading-none"
+            style={{ color: isLight ? "#1a1a2e" : "#ffffff" }}
+          >{value}</p>
         </div>
       </div>
     </div>

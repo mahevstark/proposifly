@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTheme } from "@/context/ThemeContext";
 
 interface Props {
   onCreated: () => void;
@@ -9,6 +10,9 @@ interface Props {
 }
 
 export default function CreateAdminForm({ onCreated, onClose, showMsg }: Props) {
+  const { theme } = useTheme();
+  const isLight = theme === "light";
+
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -46,14 +50,28 @@ export default function CreateAdminForm({ onCreated, onClose, showMsg }: Props) 
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const inputCls = "bg-white/[0.05] border border-white/[0.10] text-white placeholder:text-white/25 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20 transition-all w-full";
-  const labelCls = "block text-[11px] font-semibold text-white/35 uppercase tracking-wider mb-1.5";
+  const inputStyle = {
+    background: isLight ? "rgba(0,0,0,0.05)" : "rgba(255,255,255,0.05)",
+    border: isLight ? "1px solid rgba(0,0,0,0.10)" : "1px solid rgba(255,255,255,0.10)",
+    color: isLight ? "#1a1a2e" : "#ffffff",
+  };
+
+  const labelStyle = { color: isLight ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.35)" };
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-white/[0.03] overflow-hidden">
-      <div className="px-5 py-4 border-b border-white/[0.06]">
-        <h2 className="text-sm font-semibold text-white">Create New Sub-Admin</h2>
-        <p className="text-[11px] text-white/40 mt-0.5">Create credentials and share with the new admin</p>
+    <div
+      className="rounded-2xl overflow-hidden"
+      style={{
+        border: isLight ? "1px solid rgba(0,0,0,0.06)" : "1px solid rgba(255,255,255,0.06)",
+        background: isLight ? "rgba(0,0,0,0.03)" : "rgba(255,255,255,0.03)",
+      }}
+    >
+      <div
+        className="px-5 py-4"
+        style={{ borderBottom: isLight ? "1px solid rgba(0,0,0,0.06)" : "1px solid rgba(255,255,255,0.06)" }}
+      >
+        <h2 className="text-sm font-semibold" style={{ color: isLight ? "#1a1a2e" : "#ffffff" }}>Create New Sub-Admin</h2>
+        <p className="text-[11px] mt-0.5" style={{ color: isLight ? "rgba(0,0,0,0.40)" : "rgba(255,255,255,0.40)" }}>Create credentials and share with the new admin</p>
       </div>
       <div className="p-5">
         {createdCreds ? (
@@ -67,15 +85,15 @@ export default function CreateAdminForm({ onCreated, onClose, showMsg }: Props) 
               </div>
               <div className="space-y-2 font-mono text-sm">
                 <div className="flex items-center gap-2">
-                  <span className="text-white/40">Email:</span>
-                  <span className="text-white font-semibold">{createdCreds.email}</span>
+                  <span style={{ color: isLight ? "rgba(0,0,0,0.40)" : "rgba(255,255,255,0.40)" }}>Email:</span>
+                  <span className="font-semibold" style={{ color: isLight ? "#1a1a2e" : "#ffffff" }}>{createdCreds.email}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-white/40">Password:</span>
-                  <span className="text-white font-semibold">{createdCreds.password}</span>
+                  <span style={{ color: isLight ? "rgba(0,0,0,0.40)" : "rgba(255,255,255,0.40)" }}>Password:</span>
+                  <span className="font-semibold" style={{ color: isLight ? "#1a1a2e" : "#ffffff" }}>{createdCreds.password}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-white/40">Login URL:</span>
+                  <span style={{ color: isLight ? "rgba(0,0,0,0.40)" : "rgba(255,255,255,0.40)" }}>Login URL:</span>
                   <span className="text-amber-400 font-semibold">{typeof window !== "undefined" ? window.location.origin : ""}/admin/login</span>
                 </div>
               </div>
@@ -89,7 +107,11 @@ export default function CreateAdminForm({ onCreated, onClose, showMsg }: Props) 
               </button>
               <button
                 onClick={() => { setCreatedCreds(null); onClose(); }}
-                className="px-4 py-2.5 rounded-xl text-xs font-semibold text-white/60 border border-white/[0.08] hover:bg-white/[0.05] hover:text-white transition-all"
+                className="px-4 py-2.5 rounded-xl text-xs font-semibold transition-all"
+                style={{
+                  color: isLight ? "rgba(0,0,0,0.60)" : "rgba(255,255,255,0.60)",
+                  border: isLight ? "1px solid rgba(0,0,0,0.08)" : "1px solid rgba(255,255,255,0.08)",
+                }}
               >
                 Done
               </button>
@@ -99,17 +121,51 @@ export default function CreateAdminForm({ onCreated, onClose, showMsg }: Props) 
           <form onSubmit={handleCreate} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className={labelCls}>Name</label>
-                <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} className={inputCls} placeholder="Full name" required />
+                <label
+                  className="block text-[11px] font-semibold uppercase tracking-wider mb-1.5"
+                  style={labelStyle}
+                >Name</label>
+                <input
+                  type="text"
+                  value={newName}
+                  onChange={(e) => setNewName(e.target.value)}
+                  className="rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-amber-500/20 transition-all w-full"
+                  style={inputStyle}
+                  placeholder="Full name"
+                  required
+                />
               </div>
               <div>
-                <label className={labelCls}>Email</label>
-                <input type="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} className={inputCls} placeholder="email@example.com" required />
+                <label
+                  className="block text-[11px] font-semibold uppercase tracking-wider mb-1.5"
+                  style={labelStyle}
+                >Email</label>
+                <input
+                  type="email"
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                  className="rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-amber-500/20 transition-all w-full"
+                  style={inputStyle}
+                  placeholder="email@example.com"
+                  required
+                />
               </div>
             </div>
             <div>
-              <label className={labelCls}>Password</label>
-              <input type="text" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className={inputCls} placeholder="Min 6 characters" required minLength={6} />
+              <label
+                className="block text-[11px] font-semibold uppercase tracking-wider mb-1.5"
+                style={labelStyle}
+              >Password</label>
+              <input
+                type="text"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                className="rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-amber-500/20 transition-all w-full"
+                style={inputStyle}
+                placeholder="Min 6 characters"
+                required
+                minLength={6}
+              />
             </div>
             <button type="submit" disabled={creating} className="px-5 py-2.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg shadow-amber-500/20 disabled:opacity-40 transition-all flex items-center gap-2">
               {creating && <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />}

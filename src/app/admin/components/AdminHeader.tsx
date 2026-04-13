@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { useTheme } from "@/context/ThemeContext";
 
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: "M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" },
@@ -14,11 +15,16 @@ const navItems = [
 export default function AdminHeader() {
   const { user } = useAuth();
   const pathname = usePathname();
+  const { theme } = useTheme();
+  const isLight = theme === "light";
 
   return (
     <header
-      className="md:hidden px-4 pt-4 pb-0"
-      style={{ background: "#0a0a0f", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+      className="md:hidden px-4 pt-4 pb-0 transition-colors duration-200"
+      style={{
+        background: isLight ? "#ffffff" : "#0a0a0f",
+        borderBottom: isLight ? "1px solid rgba(0,0,0,0.08)" : "1px solid rgba(255,255,255,0.06)",
+      }}
     >
       {/* Top bar */}
       <div className="flex items-center justify-between mb-4">
@@ -30,7 +36,7 @@ export default function AdminHeader() {
             </div>
           </div>
           <div>
-            <h2 className="text-[13px] font-semibold tracking-tight" style={{ color: "#f1f1f3" }}>Proposifly</h2>
+            <h2 className="text-[13px] font-semibold tracking-tight" style={{ color: isLight ? "#1a1a2e" : "#f1f1f3" }}>Proposifly</h2>
             <p className="text-[8px] font-semibold uppercase tracking-[0.18em]" style={{ color: "#f97316", opacity: 0.7 }}>Admin</p>
           </div>
         </div>
@@ -41,7 +47,10 @@ export default function AdminHeader() {
           <Link
             href="/app"
             className="text-[10px] font-medium transition-colors duration-150 px-2.5 py-1.5 rounded-md"
-            style={{ color: "rgba(255,255,255,0.35)", border: "1px solid rgba(255,255,255,0.08)" }}
+            style={{
+              color: isLight ? "rgba(0,0,0,0.4)" : "rgba(255,255,255,0.35)",
+              border: isLight ? "1px solid rgba(0,0,0,0.1)" : "1px solid rgba(255,255,255,0.08)",
+            }}
           >
             Exit
           </Link>
@@ -57,9 +66,9 @@ export default function AdminHeader() {
               key={item.href}
               href={item.href}
               className="flex items-center gap-1.5 px-3 py-2.5 text-[11px] font-medium whitespace-nowrap transition-all duration-150 relative flex-shrink-0"
-              style={{ color: isActive ? "#f1f1f3" : "rgba(255,255,255,0.38)" }}
+              style={{ color: isActive ? (isLight ? "#1a1a2e" : "#f1f1f3") : (isLight ? "rgba(0,0,0,0.38)" : "rgba(255,255,255,0.38)") }}
             >
-              <svg className="w-3.5 h-3.5 flex-shrink-0" style={{ color: isActive ? "#f97316" : "rgba(255,255,255,0.3)" }} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+              <svg className="w-3.5 h-3.5 flex-shrink-0" style={{ color: isActive ? "#f97316" : (isLight ? "rgba(0,0,0,0.25)" : "rgba(255,255,255,0.3)") }} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
               </svg>
               {item.label}

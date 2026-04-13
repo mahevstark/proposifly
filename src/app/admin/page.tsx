@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import StatsCard from "./components/StatsCard";
 import ToneChart from "./components/ToneChart";
+import { useTheme } from "@/context/ThemeContext";
 
 const ProposalsChart = dynamic(() => import("./components/ProposalsChart"), { ssr: false });
 const UsersChart = dynamic(() => import("./components/UsersChart"), { ssr: false });
@@ -24,6 +25,8 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
   const [maintenance, setMaintenance] = useState(false);
+  const { theme } = useTheme();
+  const isLight = theme === "light";
 
   useEffect(() => {
     Promise.all([
@@ -96,14 +99,14 @@ export default function AdminDashboard() {
 
       {/* Maintenance Toggle (when not in maintenance) */}
       {!maintenance && (
-        <div className="rounded-xl p-4 border border-white/10 bg-white/5 flex items-center justify-between">
+        <div className="rounded-xl p-4 flex items-center justify-between" style={{ border: isLight ? "1px solid rgba(0,0,0,0.08)" : "1px solid rgba(255,255,255,0.1)", background: isLight ? "rgba(0,0,0,0.02)" : "rgba(255,255,255,0.05)" }}>
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-green-500/20 border border-green-500/30 flex items-center justify-center flex-shrink-0">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-400"><path d="M20 6 9 17l-5-5"/></svg>
             </div>
             <div>
               <p className="text-green-400 font-semibold text-sm">System Online</p>
-              <p className="text-white/40 text-xs">All services running normally. Maintenance mode will auto-activate if API rate limits are hit.</p>
+              <p className="text-xs" style={{ color: isLight ? "rgba(0,0,0,0.4)" : "rgba(255,255,255,0.4)" }}>All services running normally. Maintenance mode will auto-activate if API rate limits are hit.</p>
             </div>
           </div>
           <button
@@ -135,9 +138,9 @@ export default function AdminDashboard() {
 
       {/* Header */}
       <div>
-        <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-white/25 mb-1">Overview</p>
-        <h1 className="text-3xl font-bold tracking-tight text-white">Dashboard</h1>
-        <p className="text-sm text-white/40 mt-1">Welcome back. Here&apos;s your platform at a glance.</p>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-1" style={{ color: isLight ? "rgba(0,0,0,0.3)" : "rgba(255,255,255,0.25)" }}>Overview</p>
+        <h1 className="text-3xl font-bold tracking-tight" style={{ color: isLight ? "#1a1a2e" : "#ffffff" }}>Dashboard</h1>
+        <p className="text-sm mt-1" style={{ color: isLight ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.4)" }}>Welcome back. Here&apos;s your platform at a glance.</p>
       </div>
 
       {/* Stats Grid */}

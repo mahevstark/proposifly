@@ -1,5 +1,7 @@
 "use client";
 
+import { useTheme } from "@/context/ThemeContext";
+
 interface ApiKeyRow {
   id: number;
   provider: string;
@@ -32,13 +34,17 @@ interface Props {
 }
 
 export default function ProviderCard({ provider: p, existing, isEditing, formKey, saving, onSetFormKey, onStartEdit, onCancelEdit, onSave, onActivate, onDelete }: Props) {
+  const { theme } = useTheme();
+  const isLight = theme === "light";
   const isActive = existing?.is_active;
 
   return (
     <div className={`group relative overflow-hidden rounded-2xl border transition-all duration-300 ${
       isActive
         ? "border-emerald-500/20 bg-emerald-500/[0.04]"
-        : "border-white/[0.06] bg-white/[0.03] hover:border-white/[0.08]"
+        : isLight
+          ? "border-black/[0.06] bg-black/[0.03] hover:border-black/[0.08]"
+          : "border-white/[0.06] bg-white/[0.03] hover:border-white/[0.08]"
     }`}>
       {isActive && <div className="absolute -top-12 -right-12 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl" />}
 
@@ -51,8 +57,8 @@ export default function ProviderCard({ provider: p, existing, isEditing, formKey
               </svg>
             </div>
             <div>
-              <p className="text-sm font-bold text-white">{p.label}</p>
-              <p className="text-[11px] text-white/40">{p.sub}</p>
+              <p className="text-sm font-bold" style={{ color: isLight ? "#1a1a2e" : "#ffffff" }}>{p.label}</p>
+              <p className="text-[11px]" style={{ color: isLight ? "rgba(0,0,0,0.40)" : "rgba(255,255,255,0.40)" }}>{p.sub}</p>
             </div>
           </div>
           {isActive && (
@@ -64,13 +70,22 @@ export default function ProviderCard({ provider: p, existing, isEditing, formKey
         </div>
 
         {existing && !isEditing ? (
-          <div className="mb-4 px-3 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.06]">
-            <p className="text-xs text-white/40 font-mono">{existing.api_key_masked}</p>
-            <p className="text-[10px] text-white/25 mt-1">Updated {new Date(existing.updated_at).toLocaleString()}</p>
+          <div
+            className="mb-4 px-3 py-2.5 rounded-xl"
+            style={{
+              background: isLight ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.04)",
+              border: isLight ? "1px solid rgba(0,0,0,0.06)" : "1px solid rgba(255,255,255,0.06)",
+            }}
+          >
+            <p className="text-xs font-mono" style={{ color: isLight ? "rgba(0,0,0,0.40)" : "rgba(255,255,255,0.40)" }}>{existing.api_key_masked}</p>
+            <p className="text-[10px] mt-1" style={{ color: isLight ? "rgba(0,0,0,0.25)" : "rgba(255,255,255,0.25)" }}>Updated {new Date(existing.updated_at).toLocaleString()}</p>
           </div>
         ) : !existing && !isEditing ? (
-          <div className="mb-4 px-3 py-2.5 rounded-xl border border-dashed border-white/[0.08]">
-            <p className="text-xs text-white/35">No key configured</p>
+          <div
+            className="mb-4 px-3 py-2.5 rounded-xl border border-dashed"
+            style={{ borderColor: isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)" }}
+          >
+            <p className="text-xs" style={{ color: isLight ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.35)" }}>No key configured</p>
           </div>
         ) : null}
 
@@ -80,7 +95,12 @@ export default function ProviderCard({ provider: p, existing, isEditing, formKey
               type="text"
               value={formKey}
               onChange={(e) => onSetFormKey(e.target.value)}
-              className="bg-white/[0.05] border border-white/[0.10] text-white placeholder:text-white/25 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20 transition-all w-full"
+              className="rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-amber-500/20 transition-all w-full"
+              style={{
+                background: isLight ? "rgba(0,0,0,0.05)" : "rgba(255,255,255,0.05)",
+                border: isLight ? "1px solid rgba(0,0,0,0.10)" : "1px solid rgba(255,255,255,0.10)",
+                color: isLight ? "#1a1a2e" : "#ffffff",
+              }}
               placeholder={`Paste ${p.label} API key...`}
               autoFocus
             />
@@ -94,7 +114,11 @@ export default function ProviderCard({ provider: p, existing, isEditing, formKey
               </button>
               <button
                 onClick={onCancelEdit}
-                className="px-3 py-2 rounded-xl text-xs font-semibold text-white/60 border border-white/[0.08] hover:bg-white/[0.05] hover:text-white transition-all"
+                className="px-3 py-2 rounded-xl text-xs font-semibold border transition-all"
+                style={{
+                  color: isLight ? "rgba(0,0,0,0.60)" : "rgba(255,255,255,0.60)",
+                  borderColor: isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)",
+                }}
               >
                 Cancel
               </button>
@@ -116,7 +140,11 @@ export default function ProviderCard({ provider: p, existing, isEditing, formKey
                 )}
                 <button
                   onClick={onStartEdit}
-                  className="px-3 py-2 rounded-xl text-[11px] font-semibold text-white/60 border border-white/[0.08] hover:bg-white/[0.05] hover:text-white transition-all"
+                  className="px-3 py-2 rounded-xl text-[11px] font-semibold border transition-all"
+                  style={{
+                    color: isLight ? "rgba(0,0,0,0.60)" : "rgba(255,255,255,0.60)",
+                    borderColor: isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)",
+                  }}
                 >
                   Change
                 </button>
@@ -130,7 +158,11 @@ export default function ProviderCard({ provider: p, existing, isEditing, formKey
             ) : (
               <button
                 onClick={onStartEdit}
-                className="flex-1 px-3 py-2 rounded-xl text-[11px] font-semibold text-white/35 border border-dashed border-white/[0.08] hover:text-amber-400 hover:border-amber-500/30 transition-all"
+                className="flex-1 px-3 py-2 rounded-xl text-[11px] font-semibold border border-dashed hover:text-amber-400 hover:border-amber-500/30 transition-all"
+                style={{
+                  color: isLight ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.35)",
+                  borderColor: isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)",
+                }}
               >
                 + Add Key
               </button>

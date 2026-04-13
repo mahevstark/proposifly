@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import ProviderCard from "../components/ProviderCard";
+import { useTheme } from "@/context/ThemeContext";
 
 interface ApiKeyRow {
   id: number;
@@ -19,6 +20,9 @@ const PROVIDERS = [
 ];
 
 export default function ApiKeysPage() {
+  const { theme } = useTheme();
+  const isLight = theme === "light";
+
   const [keys, setKeys] = useState<ApiKeyRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingProvider, setEditingProvider] = useState<string | null>(null);
@@ -82,8 +86,8 @@ export default function ApiKeysPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-white tracking-tight">API Keys</h1>
-        <p className="text-sm text-white/40 mt-1">Configure AI providers. The active one powers proposal generation.</p>
+        <h1 className="text-3xl font-bold tracking-tight" style={{ color: isLight ? "#1a1a2e" : "#ffffff" }}>API Keys</h1>
+        <p className="text-sm mt-1" style={{ color: isLight ? "rgba(0,0,0,0.40)" : "rgba(255,255,255,0.40)" }}>Configure AI providers. The active one powers proposal generation.</p>
       </div>
 
       {message && (
@@ -93,7 +97,13 @@ export default function ApiKeysPage() {
       )}
 
       {/* Active Provider Banner */}
-      <div className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.03] p-5">
+      <div
+        className="relative overflow-hidden rounded-2xl p-5"
+        style={{
+          border: isLight ? "1px solid rgba(0,0,0,0.06)" : "1px solid rgba(255,255,255,0.06)",
+          background: isLight ? "rgba(0,0,0,0.03)" : "rgba(255,255,255,0.03)",
+        }}
+      >
         <div className="absolute top-0 right-0 w-48 h-48 bg-amber-500/5 rounded-full blur-3xl" />
         <div className="relative flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-500/20">
@@ -102,12 +112,12 @@ export default function ApiKeysPage() {
             </svg>
           </div>
           <div>
-            <p className="text-[10px] font-semibold text-white/35 uppercase tracking-wider">Currently Active</p>
-            <p className="text-xl font-bold text-white">
+            <p className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: isLight ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.35)" }}>Currently Active</p>
+            <p className="text-xl font-bold" style={{ color: isLight ? "#1a1a2e" : "#ffffff" }}>
               {activeKey ? getP(activeKey.provider).label : "No provider selected"}
             </p>
             {activeKey && (
-              <p className="text-[11px] text-white/40 mt-0.5">Key: <span className="font-mono">{activeKey.api_key_masked}</span></p>
+              <p className="text-[11px] mt-0.5" style={{ color: isLight ? "rgba(0,0,0,0.40)" : "rgba(255,255,255,0.40)" }}>Key: <span className="font-mono">{activeKey.api_key_masked}</span></p>
             )}
           </div>
         </div>
