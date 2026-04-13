@@ -3,6 +3,7 @@ import { GenerateProposalRequest, PortfolioLink, ProfileLink } from "@/types";
 import { buildPrompt } from "@/lib/ai";
 import { callOpenAI, callClaude, callGemini, callGroq } from "@/lib/ai-providers";
 import { getActiveProvider, getApiKey } from "@/lib/ai-keys";
+import { isRateLimited } from "@/lib/rate-limit";
 import pool from "@/lib/db";
 
 /** Set maintenance mode in DB */
@@ -105,6 +106,15 @@ ${userName}`;
 /** POST /api/generateProposal — generates a proposal via AI (falls back to dummy) */
 export async function POST(req: NextRequest) {
   try {
+    /* Rate limit: 10 requests per minute per IP */
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "unknown";
+    if (isRateLimited(ip, 10, 60000)) {
+      return NextResponse.json(
+        { error: "Too many requests. Please wait a minute before trying again." },
+        { status: 429 }
+      );
+    }
+
     const body: RequestBody = await req.json();
 
     /* Check maintenance mode */

@@ -2,9 +2,18 @@ import { NextRequest, NextResponse } from "next/server";
 import pool from "@/lib/db";
 import { getAdminFromRequest } from "@/lib/admin-auth";
 
+/** Cache admin stats for 2 minutes to reduce DB load */
+let statsCache: { data: unknown; timestamp: number } | null = null;
+const CACHE_TTL = 2 * 60 * 1000; // 2 minutes
+
 export async function GET(req: NextRequest) {
   const auth = await getAdminFromRequest(req);
   if ("error" in auth) return auth.error;
+
+  // Return cached stats if fresh
+  if (statsCache && Date.now() - statsCache.timestamp < CACHE_TTL) {
+    return NextResponse.json(statsCache.data);
+  }
 
   const [users, proposals, prds, todayProposals, activeProvider, dailyProposals, toneBreakdown, recentUsers] =
     await Promise.all([
@@ -64,7 +73,7 @@ export async function GET(req: NextRequest) {
     return { date, users: found?.count || 0 };
   });
 
-  return NextResponse.json({
+  const result = {
     totalUsers: users.rows[0].count,
     totalProposals: proposals.rows[0].count,
     totalPRDs: prds.rows[0].count,
@@ -76,5 +85,10 @@ export async function GET(req: NextRequest) {
     proposalsByDay,
     usersByDay,
     toneBreakdown: toneBreakdown.rows,
-  });
+  };
+
+  // Cache the result
+  statsCache = { data: result, timestamp: Date.now() };
+
+  return NextResponse.json(result);
 }

@@ -35,15 +35,12 @@ export default function AppPage() {
     if (authLoading) return;
 
     if (user) {
-      Promise.all([
-        fetch("/api/portfolio").then((r) => r.json()),
-        fetch("/api/preferences").then((r) => r.json()),
-        fetch("/api/profiles").then((r) => r.json()),
-      ])
-        .then(([portfolioData, prefData, profileData]) => {
-          setPortfolio(portfolioData.links || []);
-          setTone(prefData.tone || "formal");
-          setProfiles(profileData.profiles || []);
+      fetch("/api/user-data")
+        .then((r) => r.json())
+        .then((data) => {
+          setPortfolio(data.links || []);
+          setTone(data.tone || "formal");
+          setProfiles(data.profiles || []);
         })
         .catch(console.error);
     }
@@ -94,8 +91,8 @@ export default function AppPage() {
 
       setProposal(data.proposal);
 
-      // Re-check maintenance status after generation
-      fetch("/api/maintenance").then((r) => r.json()).then((d) => setMaintenance(d.maintenance)).catch(() => {});
+      // Update maintenance status from response (503 = maintenance on, 200 = off)
+      setMaintenance(false);
 
       // Scroll to the generated proposal
       setTimeout(() => {
