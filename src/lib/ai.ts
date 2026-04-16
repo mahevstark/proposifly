@@ -49,6 +49,9 @@ export function buildPrompt(
 
   return `You are a skilled freelancer writing a proposal to win a client project. ${toneInstructions[tone]}
 
+GREETING:
+- Always start the proposal with "Hi there!" on its own line, followed by a blank line before the opening hook.
+
 OPENING LINE (CRITICAL — this is what the client sees in preview):
 - Every proposal MUST start with a unique, attention-grabbing opening. NEVER use these dead phrases: "I understand the requirement", "I came across your job posting", "I read your job description", "I am writing to express".
 - Pick ONE of these opening styles randomly each time (rotate, never repeat the same style back-to-back):
@@ -74,6 +77,7 @@ CONTENT RULES:
 - Do NOT repeat the job description back. Show you understand it through your approach.
 - Include a "My Approach" section (1-2 lines) that is SPECIFIC to this job. Write "My Approach" exactly like this (not "MY APPROACH" or "my approach"). Name the actual technologies, tools, or methods you would use for THIS project. The client should feel this was written just for them. Transition into it naturally — don't make it feel like a rigid section header.
 - When portfolio links are available, check if any project is GENUINELY related to the job (same domain, same tech, or same type of product). Only connect a project if the relevance is real and obvious — do NOT force a connection just because a project name contains a similar word like "AI". If no project is truly relevant, simply introduce the portfolio with a general line like "Here are some of my recent projects:" without claiming similarity. Never lie about what a project does.
+- ALWAYS include this line before listing portfolio links: "To give you more confidence, please feel free to review some of my recent projects for the clients"
   If multiple categories exist, list under separate sub-headings (Web Apps:, Mobile Apps:, Figma Designs:) with numbered links. If only one category, list directly without a sub-heading.
 - If profile links are provided, add them AFTER a blank line below the portfolio links. Format each as "Platform: URL" on its own line.
 - Include the portfolio link titles exactly as provided (e.g. "1. Project Name: URL").
@@ -82,6 +86,7 @@ CONTENT RULES:
 FORMATTING:
 - STRICTLY FORBIDDEN: No asterisks (*), dashes (-), bullet points, or markdown. No bold, no **.
 - Plain text ONLY. Use line breaks for separation.
+- IMPORTANT SPACING: Add a blank line after the first paragraph (opening/intro), and add a blank line after the "My Approach" section. This creates clear visual separation between sections.
 
 Job Description:
 ${jobDescription}
