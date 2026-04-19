@@ -70,17 +70,29 @@ KEYWORD MATCHING (IMPORTANT — makes the proposal feel custom-written):
 WRITING STYLE:
 - Write like a real human freelancer, not a template. Sound confident but natural.
 - Avoid generic filler like "I am confident in my ability to deliver" or "I have extensive experience in". Show expertise through specifics, not claims.
-- Keep it concise — maximum 150 words. Every sentence should earn its place.
+- CRITICAL LENGTH LIMIT: The ENTIRE proposal (including greeting, body, portfolio links, profile links, and sign-off) MUST NOT exceed 1500 characters total. Count every character. If portfolio/profile links are included, write a shorter body to stay under 1500 characters. This is a hard limit — never exceed it.
+
+CLIENT NAME DETECTION:
+- Carefully scan the job description for a client name or company name (e.g. "I'm John", "My name is Sarah", "at XYZ Corp", "for ABC Company", signed off with a name, etc.).
+- If you find a client name, address them by their first name in the greeting (e.g. "Hi John!" instead of "Hi there!") and use their name naturally once more in the body if it fits.
+- If NO client name is found anywhere in the job description, use "Hi there!" and do NOT invent or guess any name. Never use "Dear Hiring Manager" or "Dear Client".
 
 CONTENT RULES:
 - Mention 10+ years of experience naturally within context (e.g. "Having built similar systems over the past decade" not "I have 10+ years of experience").
 - Do NOT repeat the job description back. Show you understand it through your approach.
-- Include a "My Approach" section (1-2 lines) that is SPECIFIC to this job. Write "My Approach" exactly like this (not "MY APPROACH" or "my approach"). Name the actual technologies, tools, or methods you would use for THIS project. The client should feel this was written just for them. Transition into it naturally — don't make it feel like a rigid section header.
+- Include a "My Approach" section that is HIGHLY SPECIFIC to this job. Write "My Approach" exactly like this (not "MY APPROACH" or "my approach"). This section MUST:
+  a) Name the exact screens/pages/features you will build (extract them from the job description).
+  b) Mention specific tools, technologies, or methods relevant to THIS project.
+  c) Show awareness of future extensibility if the job mentions it (e.g. "I'll design the layout with placeholder sections for payments so future features drop in cleanly").
+  d) Be 3-5 lines, not 1-2. This is where you prove you actually read the job. The client should feel this was written ONLY for them.
+  e) Transition into it naturally — don't make it feel like a rigid section header.
 - When portfolio links are available, check if any project is GENUINELY related to the job (same domain, same tech, or same type of product). Only connect a project if the relevance is real and obvious — do NOT force a connection just because a project name contains a similar word like "AI". If no project is truly relevant, simply introduce the portfolio with a general line like "Here are some of my recent projects:" without claiming similarity. Never lie about what a project does.
-- ALWAYS include this line before listing portfolio links: "To give you more confidence, please feel free to review some of my recent projects for the clients"
+- If portfolio links are provided (non-empty list with real URLs), include this line before listing them: "To give you more confidence, please feel free to review some of my recent projects for the clients"
   If multiple categories exist, list under separate sub-headings (Web Apps:, Mobile Apps:, Figma Designs:) with numbered links. If only one category, list directly without a sub-heading.
-- If profile links are provided, add them AFTER a blank line below the portfolio links. Format each as "Platform: URL" on its own line.
-- Include the portfolio link titles exactly as provided (e.g. "1. Project Name: URL").
+  Include the portfolio link titles exactly as provided (e.g. "1. Project Name: URL").
+- If NO portfolio links are provided or the list is empty, do NOT include any portfolio section at all. Do NOT generate fake/placeholder project names or URLs. Simply skip the entire portfolio section.
+- If profile links are provided (non-empty with real URLs), add them AFTER a blank line below the portfolio links. Format each as "Platform: URL" on its own line.
+- If NO profile links are provided or the list is empty, do NOT include any profile section. Do NOT generate fake/placeholder platform names or URLs.
 - Always end with "Best regards" on one line, then "${userName}" on the next line.
 
 FORMATTING:
@@ -91,9 +103,8 @@ FORMATTING:
 Job Description:
 ${jobDescription}
 
-Portfolio & Relevant Work:
-${linksText}
-${profileLinks.length > 0 ? `\nProfiles:\n${profileLinks.map((p) => `${p.platform.charAt(0).toUpperCase() + p.platform.slice(1)}: ${p.url}`).join("\n")}` : ""}
+${portfolioLinks.length > 0 ? `Portfolio & Relevant Work:\n${linksText}` : "Portfolio: NONE PROVIDED — do NOT include any portfolio section, do NOT generate fake links or placeholder text."}
+${profileLinks.length > 0 ? `\nProfiles:\n${profileLinks.map((p) => `${p.platform.charAt(0).toUpperCase() + p.platform.slice(1)}: ${p.url}`).join("\n")}` : "Profiles: NONE PROVIDED — do NOT include any profile links, do NOT generate fake URLs."}
 
 Write the proposal now:`;
 }
