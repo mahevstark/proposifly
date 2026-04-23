@@ -80,12 +80,39 @@ CLIENT NAME DETECTION:
 CONTENT RULES:
 - Mention 10+ years of experience naturally within context (e.g. "Having built similar systems over the past decade" not "I have 10+ years of experience").
 - Do NOT repeat the job description back. Show you understand it through your approach.
-- Include a "My Approach" section that is HIGHLY SPECIFIC to this job. Write "My Approach" exactly like this (not "MY APPROACH" or "my approach"). This section MUST:
-  a) Name the exact screens/pages/features you will build (extract them from the job description).
-  b) Mention specific tools, technologies, or methods relevant to THIS project.
-  c) Show awareness of future extensibility if the job mentions it (e.g. "I'll design the layout with placeholder sections for payments so future features drop in cleanly").
-  d) Be 3-5 lines, not 1-2. This is where you prove you actually read the job. The client should feel this was written ONLY for them.
-  e) Transition into it naturally — don't make it feel like a rigid section header.
+
+THREE MANDATORY SECTIONS (CRITICAL — every proposal MUST have all three, in this exact order):
+
+1. UNDERSTANDING (shows you GET the job):
+   - After the opening hook, demonstrate that you deeply understand what the client needs.
+   - Restate the core problem or goal in YOUR OWN words (not copy-pasting the job description).
+   - Mention specific details from the job that show you read it carefully (e.g. target audience, key challenges, business context).
+   - 2-3 lines. Natural and conversational — NOT "I understand that you need..." but rather show understanding through insight (e.g. "Building a real-time dashboard for warehouse ops means every millisecond of delay costs visibility — and that's exactly the kind of challenge I thrive on.").
+   - Transition smoothly into the next section.
+
+2. MY APPROACH (shows HOW you'll do it):
+   - Write "My Approach" exactly like this (not "MY APPROACH" or "my approach").
+   - This section MUST:
+     a) Name the exact screens/pages/features you will build (extract them from the job description).
+     b) Mention specific tools, technologies, or methods relevant to THIS project.
+     c) Show awareness of future extensibility if the job mentions it (e.g. "I'll design the layout with placeholder sections for payments so future features drop in cleanly").
+     d) Be 3-5 lines, not 1-2. This is where you prove you actually read the job. The client should feel this was written ONLY for them.
+     e) Transition into it naturally — don't make it feel like a rigid section header.
+
+3. PROVEN TRACK RECORD (ONLY when portfolio links are provided):
+   - This section is CONDITIONAL — include it ONLY if portfolio links are provided (non-empty list).
+   - If NO portfolio links are provided, SKIP this section entirely. Do NOT mention past work, relevant experience, or similar projects.
+   - When included: 1-2 lines showing relevant past experience, tied naturally into the portfolio mention.
+   - Be specific — mention a similar project type, tech stack, or domain (e.g. "I recently delivered a similar inventory management system with real-time sync for a logistics client").
+   - Do NOT use generic claims like "I have extensive experience". Show, don't tell.
+
+4. QUESTIONS (shows genuine interest and engagement):
+   - Before the closing, add a "A few quick questions:" line, then list exactly 2 questions on separate lines formatted as:
+     Q1: [first question]
+     Q2: [second question]
+   - Questions should show you're thinking ahead and care about doing it right (e.g. "Q1: Do you have any design references or wireframes in mind?" and "Q2: What's the ideal timeline for the first milestone?").
+   - Keep questions specific to THIS job — no generic questions like "When do you want to start?".
+   - Each question on its own line, clearly labeled Q1 and Q2.
 - When portfolio links are available, check if any project is GENUINELY related to the job (same domain, same tech, or same type of product). Only connect a project if the relevance is real and obvious — do NOT force a connection just because a project name contains a similar word like "AI". If no project is truly relevant, simply introduce the portfolio with a general line like "Here are some of my recent projects:" without claiming similarity. Never lie about what a project does.
 - If portfolio links are provided (non-empty list with real URLs), include this line before listing them: "To give you more confidence, please feel free to review some of my recent projects for the clients"
   If multiple categories exist, list under separate sub-headings (Web Apps:, Mobile Apps:, Figma Designs:) with numbered links. If only one category, list directly without a sub-heading.
@@ -93,12 +120,12 @@ CONTENT RULES:
 - If NO portfolio links are provided or the list is empty, do NOT include any portfolio section at all. Do NOT generate fake/placeholder project names or URLs. Simply skip the entire portfolio section.
 - If profile links are provided (non-empty with real URLs), add them AFTER a blank line below the portfolio links. Format each as "Platform: URL" on its own line.
 - If NO profile links are provided or the list is empty, do NOT include any profile section. Do NOT generate fake/placeholder platform names or URLs.
-- Always end with "Best regards" on one line, then "${userName}" on the next line.
+- Always end with "Looking forward to hearing from you!" on one line, then a blank line, then "${userName}" on the next line.
 
 FORMATTING:
 - STRICTLY FORBIDDEN: No asterisks (*), dashes (-), bullet points, or markdown. No bold, no **.
 - Plain text ONLY. Use line breaks for separation.
-- IMPORTANT SPACING: Add a blank line after the first paragraph (opening/intro), and add a blank line after the "My Approach" section. This creates clear visual separation between sections.
+- IMPORTANT SPACING: Add a blank line after the opening hook/intro, after the Understanding section, after the "My Approach" section, after the Proven Track Record section (if included), and after the Questions. This creates clear visual separation between sections.
 
 Job Description:
 ${jobDescription}
