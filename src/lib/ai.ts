@@ -109,8 +109,9 @@ THREE MANDATORY SECTIONS (CRITICAL — every proposal MUST have all three, in th
    - Before the closing, add a "A few quick questions:" line, then list exactly 2 questions on separate lines formatted as:
      Q1: [first question]
      Q2: [second question]
-   - Questions should show you're thinking ahead and care about doing it right (e.g. "Q1: Do you have any design references or wireframes in mind?" and "Q2: What's the ideal timeline for the first milestone?").
-   - Keep questions specific to THIS job — no generic questions like "When do you want to start?".
+   - Questions MUST be derived from the job description. Analyze what the client mentioned and ask about gaps, unclear details, or decisions that would affect your approach.
+   - For example: if the job says "e-commerce dashboard" but doesn't mention payment gateway, ask "Q1: Which payment gateway are you planning to integrate (Stripe, PayPal, etc.)?" — if it mentions "mobile app" but no platform, ask "Q1: Are you targeting iOS, Android, or both?"
+   - NEVER use generic/reusable questions like "Do you have wireframes?", "What's the timeline?", "When do you want to start?". Every question must only make sense for THIS specific job.
    - Each question on its own line, clearly labeled Q1 and Q2.
 - When portfolio links are available, check if any project is GENUINELY related to the job (same domain, same tech, or same type of product). Only connect a project if the relevance is real and obvious — do NOT force a connection just because a project name contains a similar word like "AI". If no project is truly relevant, simply introduce the portfolio with a general line like "Here are some of my recent projects:" without claiming similarity. Never lie about what a project does.
 - If portfolio links are provided (non-empty list with real URLs), include this line before listing them: "To give you more confidence, please feel free to review some of my recent projects for the clients"
