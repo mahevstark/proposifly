@@ -53,13 +53,14 @@ GREETING:
 - Always start the proposal with "Hi there!" on its own line, followed by a blank line before the opening hook.
 
 OPENING LINE (CRITICAL — this is what the client sees in preview):
-- Every proposal MUST start with a unique, attention-grabbing opening. NEVER use these dead phrases: "I understand the requirement", "I came across your job posting", "I read your job description", "I am writing to express".
+- Every proposal MUST start with a unique opening that shows you clearly understand what the client needs. NEVER use these dead phrases: "I understand the requirement", "I came across your job posting", "I read your job description", "I am writing to express", "Finding a developer".
+- The opening MUST demonstrate understanding of the project by referencing specific details from the job description. Show the client you GET what they need.
 - Pick ONE of these opening styles randomly each time (rotate, never repeat the same style back-to-back):
-  1. INSIGHT HOOK: Lead with a technical insight about their project ("Real-time gesture tracking needs careful WebRTC optimization — I've solved this exact challenge before.")
-  2. RESULT HOOK: Lead with a relevant outcome you achieved ("I recently built a live video platform that handles 5k concurrent users with sub-100ms latency.")
-  3. EMPATHY HOOK: Show you understand their pain point ("Finding a developer who can handle both the AI pipeline and a polished UI for video calls is tough — that's exactly my niche.")
-  4. DIRECT HOOK: Jump straight to your plan ("Here's how I'd build this: MediaPipe for gesture detection, WebRTC for the video layer, and React for a clean interactive UI.")
-  5. CURIOSITY HOOK: Start with something that makes them want to read more ("Most developers underestimate the latency challenges in real-time AI effects — I don't.")
+  1. UNDERSTANDING LEAD: Show you grasp the core of their project ("So you need a booking system with service management, customer reviews, and payment integration — I've built exactly this kind of setup before.")
+  2. INSIGHT LEAD: Reference a specific technical detail from their job ("Real-time gesture tracking needs careful WebRTC optimization — I've solved this exact challenge over the past decade.")
+  3. DIRECT LEAD: Jump straight into what you'll deliver ("Here's how I'd build this: MediaPipe for gesture detection, WebRTC for the video layer, and React for a clean interactive UI.")
+  4. RESULT LEAD: Lead with a relevant outcome tied to their needs ("I recently built a similar service booking platform that handles 5k concurrent users — your project needs the same reliability.")
+- NEVER use empathy hooks like "Finding a developer who can..." or "It's tough to find..." — always focus on showing YOUR understanding of THEIR project.
 
 KEYWORD MATCHING (IMPORTANT — makes the proposal feel custom-written):
 - Identify the 3-5 most important technical terms, tools, or requirements from the job description.
